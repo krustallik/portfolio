@@ -1,0 +1,47 @@
+services:
+  portfolio:
+    build:
+      context: .
+      target: development
+    init: true
+    command: sh -c "npm ci && npm run generate:preview && npm run dev -- --host 0.0.0.0"
+    ports:
+      - "127.0.0.1:5173:5173"
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - .:/workspace
+      - node_modules:/workspace/node_modules
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:5173').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))\""]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 15s
+
+  e2e:
+    build:
+      context: .
+      dockerfile: Dockerfile.e2e
+    profiles: ["test"]
+    depends_on:
+      portfolio:
+        condition: service_healthy
+    environment:
+      BASE_URL: http://portfolio:5173
+    volumes:
+      - .:/workspace
+      - node_modules:/workspace/node_modules
+
+  dependency-setup:
+    image: node:24.21.0-alpine
+    profiles: ["setup"]
+    working_dir: /workspace
+    volumes:
+      - .:/workspace
+      - node_modules:/workspace/node_modules
+    entrypoint: ["npm"]
+
+volumes:
+  node_modules:

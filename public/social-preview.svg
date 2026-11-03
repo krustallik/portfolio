@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#f1f0ea"/>
+  <path d="M0 500c150-8 147-94 285-94s165 78 293 48 146-112 262-88 189 67 360 14" stroke="#c7d1cf" stroke-width="2"/>
+  <path d="M0 530c150-8 147-94 285-94s165 78 293 48 146-112 262-88 189 67 360 14" stroke="#c7d1cf" stroke-width="2"/>
+  <path d="M130 464 285 406l293 48 262-88 190 14" stroke="#315fc0" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#f1f0ea" stroke="#315fc0" stroke-width="5"><circle cx="130" cy="464" r="12"/><circle cx="285" cy="406" r="12"/><circle cx="578" cy="454" r="12"/><circle cx="840" cy="366" r="12"/><circle cx="1030" cy="380" r="12"/></g>
+  <text x="88" y="182" fill="#315fc0" font-family="DejaVu Sans Mono, monospace" font-size="20" letter-spacing="4">SOFTWARE DEVELOPMENT / KOŠICE</text>
+  <text x="82" y="284" fill="#182732" font-family="DejaVu Sans, sans-serif" font-size="82" font-weight="600" letter-spacing="-5">Ihor Havryliv</text>
+  <text x="88" y="344" fill="#53616a" font-family="DejaVu Sans, sans-serif" font-size="30">Full-stack development · Automation · Research</text>
+  <rect x="1012" y="70" width="112" height="45" rx="3" stroke="#9caeb3"/>
+  <text x="1036" y="99" fill="#214887" font-family="DejaVu Sans Mono, monospace" font-size="16" letter-spacing="2">KE / 01</text>
+</svg>
