@@ -24,10 +24,11 @@ describe("curated project data", () => {
     const booktop = getProjectBySlug("booktop-marketplace");
     const building = getProjectBySlug("building-management-app");
     const research = getProjectBySlug("missing-data-tabular-models");
-    expect(booktop?.context).toBe("Frontend Developer · Five-person team");
+    expect(booktop?.context).toBe("Frontend Developer · Cross-functional team");
     expect(booktop?.personalRole).toBe("Frontend Developer");
+    expect(booktop?.cardTechnologies).toEqual(["Next.js 16", "React 19", "TypeScript"]);
     expect(booktop?.projectStack).toContain(".NET 10");
-    expect(booktop?.contributions.join(" ")).toContain("do not claim the .NET API");
+    expect(booktop?.contributions.join(" ")).toContain("I do not claim the .NET API or backend features as my work");
     expect(building?.personalRole).toBe("Full-Stack Developer & Project Coordinator");
     expect(building?.contributions.join(" ")).toContain("both frontend and backend development");
     expect(building?.contributions.join(" ")).toContain("five-person student team");
@@ -41,15 +42,17 @@ describe("curated project data", () => {
 
   it("maps each practice skill to personal project evidence and labels team contribution", () => {
     const skills = skillGroups.flatMap((group) => group.skills);
-    const dotnet = skills.find((skill) => skill.name === "C# · .NET");
+    const csharp = skills.find((skill) => skill.name === "C#");
     const reactNative = skills.find((skill) => skill.name === "React Native");
     const nest = skills.find((skill) => skill.name === "NestJS");
     const coordination = skills.find((skill) => skill.name === "Project coordination");
-    expect(dotnet?.evidence).toEqual([{ projectSlug: "gymbeam-shifts" }]);
+    expect(csharp?.evidence).toEqual([{ projectSlug: "gymbeam-shifts" }]);
     expect(reactNative?.evidence).toEqual([{ projectSlug: "building-management-app", context: "team contribution" }]);
     expect(nest?.evidence).toEqual([{ projectSlug: "building-management-app", context: "team contribution" }]);
     expect(coordination?.evidence).toEqual([{ projectSlug: "building-management-app", context: "five-person student team" }]);
     expect(skills.find((skill) => skill.name === "React")?.evidence.some((entry) => "projectSlug" in entry && entry.projectSlug === "booktop-marketplace" && entry.context === "frontend")).toBe(true);
+    expect(skills.find((skill) => skill.name === "MongoDB")?.evidence).toEqual([{ additionalWorkSlug: "citizen-reporting" }]);
+    expect(skills.find((skill) => skill.name === "SQLite")?.evidence).toEqual([{ additionalWorkSlug: "personal-spending-log" }]);
     expect(skills.some((skill) => skill.name === "Prisma" && skill.evidence.some((entry) => "projectSlug" in entry && entry.projectSlug === "booktop-marketplace"))).toBe(false);
   });
 

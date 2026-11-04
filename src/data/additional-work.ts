@@ -48,9 +48,6 @@ export function getAdditionalWorkBySlug(slug: string | undefined): AdditionalWor
 }
 
 export const additionalExperience: AdditionalSkill[] = [
-  { name: "ASP.NET Core", context: "MVS Skills and GymBeam Shifts", additionalWorkSlug: "mvs-skills" },
-  { name: "MongoDB", context: "Citizen reporting app", additionalWorkSlug: "citizen-reporting" },
-  { name: "SQLite", context: "Personal spending log", additionalWorkSlug: "personal-spending-log" },
   { name: "Java", context: "Earlier experience" },
 ];
 

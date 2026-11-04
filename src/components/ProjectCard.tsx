@@ -36,7 +36,7 @@ export function ProjectCard({ project, featured = false, wide = false }: Project
         <p>{project.description}</p>
         <div className="project-card-bottom">
           <ul className="tag-list" aria-label={messages.card.technologies}>
-            {project.projectStack.slice(0, featured ? 5 : 4).map((technology) => <li key={technology}>{technology}</li>)}
+            {(project.cardTechnologies ?? project.projectStack).slice(0, featured ? 5 : 4).map((technology) => <li key={technology}>{technology}</li>)}
           </ul>
           <Link className="text-link" to={`/projects/${project.slug}`}>
             {messages.card.caseStudy} <ArrowUpRight size={15} aria-hidden="true" />

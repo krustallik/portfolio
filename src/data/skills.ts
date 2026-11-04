@@ -68,18 +68,29 @@ export const skillGroups: SkillGroup[] = [
         name: "Prisma",
         evidence: [{ projectSlug: "bodycast" }],
       },
+      {
+        name: "MongoDB",
+        evidence: [{ additionalWorkSlug: "citizen-reporting" }],
+      },
+      {
+        name: "SQLite",
+        evidence: [{ additionalWorkSlug: "personal-spending-log" }],
+      },
     ],
   },
   {
     title: "Automation and delivery",
     skills: [
       {
-        name: "C# · .NET",
+        name: "C#",
         evidence: [{ projectSlug: "gymbeam-shifts" }],
       },
       {
         name: "ASP.NET Core",
-        evidence: [{ projectSlug: "gymbeam-shifts" }],
+        evidence: [
+          { projectSlug: "gymbeam-shifts" },
+          { additionalWorkSlug: "mvs-skills" },
+        ],
       },
       {
         name: "Selenium",

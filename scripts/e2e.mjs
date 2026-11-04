@@ -18,6 +18,28 @@ const projectCases = [
   ["building-management-app", "Building management app", 7],
   ["missing-data-tabular-models", "Tabular models with missing data", 4],
 ];
+const englishSummaries = [
+  ["Public lighting fault reporting", "A Košice streetlight map helps residents explore fixtures and prepare fault reports with validated location details. Operators use a separate authenticated workspace to search and update the inventory."],
+  ["Booktop marketplace", "Shoppers can browse and filter a book catalog, view product details, and add items to a cart. I focused on the Next.js frontend in a five-person cross-functional team spanning backend, DevOps, and design."],
+  ["GymBeam shifts", "The bot filters a third-party shift portal by configured dates, times, holidays, and locations, then attempts to register for matching shifts. A separate dashboard lets me monitor and manage isolated bot instances."],
+  ["BodyCast health analytics", "BodyCast brings health measurements, nutrition, and training history—including strength sessions—into a personal dashboard. It pairs body-composition estimates and planning scenarios with diagnostics for source data, gaps, and model freshness."],
+  ["Building management app", "Administrators manage buildings and users, building managers send notices to assigned properties, and occupants receive them in this cross-platform app. Role-scoped access separates these workflows and supports scheduled notifications."],
+  ["Tabular models with missing data", "This co-authored study compares classical models, TabPFN, and TabICL for bankruptcy prediction under simulated MCAR, MAR, and MNAR missingness, using PR-AUC to assess imbalanced data. The current pipeline is Taiwan-only; broader report results are historical and have not been reproduced from this checkout."],
+];
+const slovakSummaries = [
+  ["Nahlasovanie porúch verejného osvetlenia", "Mapa pouličného osvetlenia v Košiciach umožňuje prezerať si polohu svietidiel a pripraviť hlásenie poruchy s overenými údajmi o mieste. Správcovia v samostatnom zabezpečenom rozhraní vyhľadávajú a upravujú inventár."],
+  ["Knižné trhovisko Booktop", "Zákazníci si môžu prezerať a filtrovať katalóg kníh, otvárať podrobnosti o produktoch a pridávať ich do košíka. V päťčlennom multidisciplinárnom tíme som sa sústredil na frontend v Next.js a spolupracoval s backendovým vývojárom, dvoma dizajnérmi a DevOps inžinierom."],
+  ["Automatizácia pracovných zmien GymBeam", "Bot filtruje ponuky pracovných zmien na portáli tretej strany podľa nastavených dátumov, časov, sviatkov a lokalít a pri zhode sa pokúsi prihlásiť na vybranú zmenu. V samostatnom paneli možno sledovať a spravovať izolované inštancie botov."],
+  ["Zdravotná analytika BodyCast", "BodyCast spája zdravotné merania, výživu a tréningovú históriu vrátane silových tréningov do osobného prehľadu. Odhady zloženia tela a plánovacie scenáre dopĺňa diagnostikou zdrojových údajov, chýbajúcich hodnôt a aktuálnosti modelu."],
+  ["Aplikácia na správu budov", "Administrátori spravujú budovy a používateľov, správcovia budov posielajú oznámenia pre pridelené objekty a obyvatelia ich prijímajú v tejto multiplatformovej aplikácii. Prístup podľa rolí oddeľuje tieto pracovné postupy a umožňuje plánovanie upozornení."],
+  ["Tabuľkové modely s chýbajúcimi údajmi", "Táto spoluautorská štúdia porovnáva klasické modely, TabPFN a TabICL pri predikcii bankrotu v podmienkach simulovaného chýbania údajov MCAR, MAR a MNAR; výkonnosť hodnotí aj podľa PR-AUC. Hlavný postup v aktuálnom repozitári používa iba taiwanské dáta; širšie výsledky zo správy sú historické a nepodarilo sa ich zopakovať."],
+];
+
+async function chooseLanguage(picker, language) {
+  const label = language === "sk" ? "Slovenčina" : "English";
+  await picker.locator(".language-trigger").click();
+  await picker.getByRole("menuitemradio", { name: label }).click();
+}
 
 async function assertImagesLoad(selector) {
   const images = page.locator(selector);
@@ -78,6 +100,13 @@ try {
   assert.equal(await page.locator(".project-card--wide").count(), 1, "the final project should balance the selected-project grid");
   assert.equal(await page.locator(".hero-name").innerText(), "Bc. Ihor Havryliv");
   await page.getByRole("heading", { name: "Technical University of Košice" }).waitFor();
+  for (const [name, summary] of englishSummaries) {
+    const card = page.locator(".project-card").filter({ has: page.getByRole("heading", { name, exact: true }) });
+    assert.equal(await card.locator(".project-card-content > p").innerText(), summary, `${name} should show its reviewed English summary`);
+    const metadata = await card.locator(".project-card-meta > span").allInnerTexts();
+    assert.equal(metadata.length, 2, `${name} should have two concise metadata labels`);
+    assert.notEqual(metadata[0], metadata[1], `${name} category and context should provide distinct information`);
+  }
   await page.getByText("Bachelor's degree in Computer Science", { exact: true }).waitFor();
   await page.getByText("Completed in 2025", { exact: true }).waitFor();
   await page.getByText("Currently studying · second and final year", { exact: true }).waitFor();
@@ -87,9 +116,15 @@ try {
   await buildingCard.getByText(/Full-Stack Developer & Project Coordinator/).waitFor();
   assert.equal(await page.getByRole("link", { name: "ihorhavryliv123@gmail.com" }).getAttribute("href"), "mailto:ihorhavryliv123@gmail.com");
   assert.equal(await page.locator(".other-work-item").count(), 5, "homepage should include five additional repository links");
+  const booktopCard = page.locator(".project-card").filter({ has: page.getByRole("heading", { name: "Booktop marketplace", exact: true }) });
+  assert.match(await booktopCard.locator(".project-card-meta").innerText(), /Frontend Developer · Cross-functional team/i);
+  assert.doesNotMatch(await booktopCard.locator(".tag-list").innerText(), /\.NET|ASP\.NET/i, "Booktop homepage badges should show frontend evidence only");
   await assertImagesLoad(".project-card img");
   assert.ok((await page.request.get(`${baseURL}/social-preview.png`)).ok(), "social preview image should exist");
   await page.locator("#skills").scrollIntoViewIfNeeded();
+  await page.getByRole("heading", { name: "Additional Experience" }).waitFor();
+  await page.getByText("Java", { exact: true }).waitFor();
+  await page.getByText("Earlier experience", { exact: true }).waitFor();
   for (const skillName of ["React Native", "NestJS"]) {
     const skillRow = page.locator(".skill-practice-list li").filter({ hasText: skillName });
     await skillRow.getByRole("link", { name: "Building app" }).waitFor();
@@ -112,6 +147,14 @@ try {
     await page.goto(`${baseURL}/projects/${slug}`, { waitUntil: "networkidle" });
     await page.getByRole("heading", { name, level: 1 }).waitFor();
     await page.getByRole("heading", { name: "My role & contributions" }).waitFor();
+    if (slug === "booktop-marketplace") {
+      assert.match(await page.locator(".detail-tech-list").innerText(), /\.NET 10/);
+      await page.getByText(/five-person team with one backend developer, two UI\/UX designers, and one DevOps engineer/i).waitFor();
+    }
+    if (slug === "bodycast") {
+      await page.getByText(/manage strength programs and sessions/i).waitFor();
+      await page.getByText(/not medical advice/i).waitFor();
+    }
     assert.equal(await page.locator(".gallery-thumbnail").count(), count, `${slug} gallery should contain ${count} source captures`);
     await assertImagesLoad(".gallery-figure img");
     const imageFit = await page.locator(".gallery-viewport").evaluate((viewport) => {
@@ -173,6 +216,32 @@ try {
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: `${screenshotDirectory}/portfolio-desktop.png`, fullPage: true });
   await page.screenshot({ path: `${screenshotDirectory}/portfolio-desktop-en.png`, fullPage: true });
+  const languagePicker = page.locator(".language-picker--navigation");
+  const languageTrigger = languagePicker.locator(".language-trigger");
+  await languageTrigger.focus();
+  await page.keyboard.press("ArrowDown");
+  await page.getByRole("menuitemradio", { name: "English" }).waitFor();
+  assert.equal(await page.getByRole("menuitemradio", { name: "English" }).evaluate((element) => element === document.activeElement), true, "ArrowDown should open the language menu and focus its first option");
+  await page.keyboard.press("ArrowDown");
+  assert.equal(await page.getByRole("menuitemradio", { name: "Slovenčina" }).evaluate((element) => element === document.activeElement), true, "ArrowDown should move through language options");
+  await page.keyboard.press("Escape");
+  await page.getByRole("menu").waitFor({ state: "detached" });
+  assert.equal(await languageTrigger.evaluate((element) => element === document.activeElement), true, "Escape should return focus to the language trigger");
+  await languageTrigger.click();
+  await page.locator(".site-header").screenshot({ path: `${screenshotDirectory}/language-picker-desktop-en.png` });
+  await page.keyboard.press("Escape");
+  await page.setViewportSize({ width: 768, height: 900 });
+  const tabletMenuToggle = page.getByRole("button", { name: "Open navigation menu" });
+  assert.equal(await tabletMenuToggle.isVisible(), true, "tablet width should use the compact navigation");
+  await page.locator(".menu-toggle").click();
+  await page.getByRole("link", { name: "Work", exact: true }).waitFor();
+  await languageTrigger.click();
+  await page.getByRole("menuitemradio", { name: "English" }).waitFor();
+  const tabletMenuBounds = await page.locator(".language-menu").boundingBox();
+  assert.ok(tabletMenuBounds && tabletMenuBounds.x >= 0 && tabletMenuBounds.x + tabletMenuBounds.width <= 768, "tablet language menu should stay within the viewport");
+  await page.keyboard.press("Escape");
+  await page.locator(".menu-toggle").click();
+  await page.setViewportSize({ width: 1440, height: 1000 });
   await page.locator("#about").evaluate((section) => section.scrollIntoView({ block: "start", behavior: "instant" }));
   const educationSectionTop = await page.locator("#about").evaluate((section) => Math.round(section.getBoundingClientRect().top));
   assert.ok(educationSectionTop >= 0 && educationSectionTop <= 100, `education screenshot should start below the sticky header, got top=${educationSectionTop}`);
@@ -192,26 +261,33 @@ try {
   await page.screenshot({ path: `${screenshotDirectory}/portfolio-mobile-viewport.png` });
   await page.screenshot({ path: `${screenshotDirectory}/portfolio-mobile.png`, fullPage: true });
   await page.screenshot({ path: `${screenshotDirectory}/portfolio-mobile-en.png`, fullPage: true });
+  await page.locator(".language-picker--navigation .language-trigger").click();
+  await page.locator(".site-header").screenshot({ path: `${screenshotDirectory}/language-picker-mobile-en.png` });
+  await page.keyboard.press("Escape");
 
   const mobileMenu = page.getByRole("button", { name: "Open navigation menu" });
   await mobileMenu.click();
-  await page.getByRole("button", { name: "Switch language to Slovak" }).click();
+  await chooseLanguage(page.locator(".language-picker--navigation"), "sk");
   await page.getByRole("heading", { name: "Softvér pre skutočný svet." }).waitFor();
   await page.waitForFunction(() => document.documentElement.lang === "sk");
-  assert.equal(await page.getByRole("button", { name: "Prepnúť jazyk na slovenčinu" }).getAttribute("aria-pressed"), "true");
+  assert.equal(await page.locator(".language-picker--navigation .language-trigger").innerText(), "Slovenčina");
   assert.equal(await page.locator(".menu-toggle").getAttribute("aria-expanded"), "true", "mobile menu stays open during language selection");
   await page.locator(".menu-toggle").click();
   await page.screenshot({ path: `${screenshotDirectory}/portfolio-mobile-sk.png`, fullPage: true });
   await page.locator(".menu-toggle").click();
-  await page.getByRole("button", { name: "Prepnúť jazyk na angličtinu" }).click();
+  await chooseLanguage(page.locator(".language-picker--navigation"), "en");
   await page.getByRole("heading", { name: "Software for the real world." }).waitFor();
   await page.locator(".menu-toggle").click();
   await page.setViewportSize({ width: 1440, height: 1000 });
   await page.goto(baseURL, { waitUntil: "networkidle" });
-  await page.getByRole("button", { name: "Switch language to Slovak" }).click();
+  await chooseLanguage(page.locator(".language-picker--navigation"), "sk");
   await page.getByRole("heading", { name: "Softvér pre skutočný svet." }).waitFor();
   await page.waitForFunction(() => document.documentElement.lang === "sk");
   await assertImagesLoad(".project-card img");
+  for (const [name, summary] of slovakSummaries) {
+    const card = page.locator(".project-card").filter({ has: page.getByRole("heading", { name, exact: true }) });
+    assert.equal(await card.locator(".project-card-content > p").innerText(), summary, `${name} should show its reviewed Slovak summary`);
+  }
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: `${screenshotDirectory}/portfolio-desktop-sk.png`, fullPage: true });
   await page.locator("#about").scrollIntoViewIfNeeded();
@@ -244,12 +320,12 @@ try {
   }
   await page.goto(`${baseURL}/projects/building-management-app`, { waitUntil: "networkidle" });
   await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.getByRole("button", { name: "Prepnúť jazyk na angličtinu" }).click();
+  await chooseLanguage(page.locator(".language-picker--navigation"), "en");
   await page.getByRole("heading", { name: "Building management app", level: 1 }).waitFor();
   await page.getByRole("button", { name: "Next screenshot" }).click();
   await page.getByRole("button", { name: /^Enlarge screenshot 2 of 7/ }).click();
   await page.getByRole("dialog").waitFor();
-  await page.getByRole("dialog").getByRole("button", { name: "Switch language to Slovak" }).click();
+  await chooseLanguage(page.getByRole("dialog").locator(".language-picker--lightbox"), "sk");
   await page.getByRole("dialog", { name: /Snímka 2 z 7/ }).waitFor();
   assert.equal(await page.locator(".gallery-count").innerText(), "2 / 7", "language change should preserve the open gallery index");
   assert.match(await page.locator(".story-role").innerText(), /Full-stack vývojár a koordinátor projektu/);
@@ -268,7 +344,7 @@ try {
   for (const width of [360, 390, 768, 1024, 1440]) {
     await assertNoHorizontalOverflow(width, "Building Management Slovak case study");
   }
-  await page.getByRole("button", { name: "Prepnúť jazyk na angličtinu" }).click();
+  await chooseLanguage(page.locator(".language-picker--navigation"), "en");
   await page.getByRole("heading", { name: "Building management app", level: 1 }).waitFor();
   await page.goto(`${baseURL}/projects/building-management-app`, { waitUntil: "networkidle" });
   await page.locator(".gallery-viewport").dispatchEvent("pointerdown", { pointerType: "touch", pointerId: 1, isPrimary: true, clientX: 280 });

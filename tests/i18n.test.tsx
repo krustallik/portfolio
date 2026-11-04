@@ -20,13 +20,33 @@ describe("English and Slovak portfolio locales", () => {
     await screen.findByRole("heading", { name: "Software for the real world." });
     expect(document.documentElement.lang).toBe("en");
 
-    fireEvent.click(screen.getByRole("button", { name: "Switch language to Slovak" }));
+    fireEvent.click(screen.getByRole("button", { name: "Choose language: English" }));
+    expect(screen.getByRole("menuitemradio", { name: "English" })).toHaveAttribute("aria-checked", "true");
+    expect(screen.getByRole("menuitemradio", { name: "Slovenčina" })).toHaveAttribute("aria-checked", "false");
+    fireEvent.click(screen.getByRole("menuitemradio", { name: "Slovenčina" }));
     await screen.findByRole("heading", { name: "Softvér pre skutočný svet." });
     await waitFor(() => expect(document.documentElement.lang).toBe("sk"));
     expect(document.title).toContain("Full-stack vývojár a absolvent informatiky");
     expect(document.querySelector('meta[name="description"]')?.getAttribute("content")).toContain("absolvent informatiky");
-    expect(screen.getByRole("button", { name: "Prepnúť jazyk na slovenčinu" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "Vybrať jazyk: Slovenčina" })).toHaveAttribute("aria-expanded", "false");
     expect(window.localStorage.getItem(STORAGE_KEY)).toBe("sk");
+  });
+
+  it("supports keyboard navigation and Escape focus restoration", async () => {
+    renderPortfolio();
+    const trigger = screen.getByRole("button", { name: "Choose language: English" });
+    trigger.focus();
+    fireEvent.keyDown(trigger, { key: "ArrowDown" });
+    const englishOption = await screen.findByRole("menuitemradio", { name: "English" });
+    await waitFor(() => expect(englishOption).toHaveFocus());
+
+    fireEvent.keyDown(englishOption, { key: "ArrowDown" });
+    const slovakOption = screen.getByRole("menuitemradio", { name: "Slovenčina" });
+    expect(slovakOption).toHaveFocus();
+    fireEvent.keyDown(slovakOption, { key: "Escape" });
+
+    await waitFor(() => expect(screen.queryByRole("menu")).not.toBeInTheDocument());
+    await waitFor(() => expect(trigger).toHaveFocus());
   });
 
   it("restores the saved locale after mounting again", async () => {
@@ -46,7 +66,7 @@ describe("English and Slovak portfolio locales", () => {
     renderPortfolio();
     await screen.findByRole("heading", { name: "Software for the real world." });
     expect(document.documentElement.lang).toBe("en");
-    expect(screen.getByRole("button", { name: "Switch language to English" })).toHaveAttribute("aria-pressed", "true");
+    expect(screen.getByRole("button", { name: "Choose language: English" })).toHaveAttribute("aria-expanded", "false");
     read.mockRestore();
     write.mockRestore();
   });
@@ -59,7 +79,8 @@ describe("English and Slovak portfolio locales", () => {
     fireEvent.click(screen.getByRole("button", { name: /^Enlarge screenshot 2 of 7/ }));
     expect(screen.getByRole("dialog")).toBeInTheDocument();
 
-    fireEvent.click(within(screen.getByRole("dialog")).getByRole("button", { name: "Switch language to Slovak" }));
+    fireEvent.click(within(screen.getByRole("dialog")).getByRole("button", { name: "Choose language: English" }));
+    fireEvent.click(within(screen.getByRole("dialog")).getByRole("menuitemradio", { name: "Slovenčina" }));
     await screen.findByRole("heading", { name: "Aplikácia na správu budov", level: 1 });
     expect(screen.getByRole("dialog", { name: /Snímka 2 z 7/ })).toBeInTheDocument();
     expect(document.querySelector(".gallery-count")).toHaveTextContent("2 / 7");

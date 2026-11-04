@@ -203,21 +203,17 @@ export function HomePage() {
               </article>
             ))}
           </div>
-          <div className="additional-skills">
-            <span>{messages.skills.otherSkills}</span>
-            {additionalExperience.map((skill) => {
-              const item = getAdditionalWorkBySlug(skill.additionalWorkSlug);
-              const context = messages.skills.additionalContexts[skill.context]
-                ?? (skill.context === "Earlier experience" ? messages.skills.earlierExperience : skill.context);
-              const itemContent = item ? messages.additionalWork[item.slug] ?? item : undefined;
-              return (
-                <span className="additional-skill" key={skill.name}>
-                  {item && itemContent ? <a href={item.github} target="_blank" rel="noreferrer">{itemContent.name}</a> : skill.name}
-                  <span className="additional-skill-context"> · {context}</span>
-                </span>
-              );
-            })}
-          </div>
+          <section className="additional-experience" aria-labelledby="additional-experience-title">
+            <h3 id="additional-experience-title">{messages.skills.additionalExperience}</h3>
+            <ul className="additional-experience-list">
+              {additionalExperience.map((skill) => (
+                <li key={skill.name}>
+                  <strong>{skill.name}</strong>
+                  <span>{skill.context === "Earlier experience" ? messages.skills.earlierExperience : skill.context}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
         </div>
       </section>
 

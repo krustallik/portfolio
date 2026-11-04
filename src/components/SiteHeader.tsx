@@ -40,18 +40,20 @@ export function SiteHeader() {
           <a className="nav-github" href={profile.github} target="_blank" rel="noreferrer" onClick={() => setMenuOpen(false)}>
             {messages.header.github} <span aria-hidden="true">↗</span>
           </a>
-          <LanguageSwitcher />
         </nav>
-        <button
-          aria-controls="main-navigation"
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? messages.header.closeMenu : messages.header.openMenu}
-          className="menu-toggle"
-          onClick={() => setMenuOpen((open) => !open)}
-          type="button"
-        >
-          {menuOpen ? <X size={21} aria-hidden="true" /> : <Menu size={21} aria-hidden="true" />}
-        </button>
+        <div className="header-actions">
+          <LanguageSwitcher />
+          <button
+            aria-controls="main-navigation"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? messages.header.closeMenu : messages.header.openMenu}
+            className="menu-toggle"
+            onClick={() => setMenuOpen((open) => !open)}
+            type="button"
+          >
+            {menuOpen ? <X size={21} aria-hidden="true" /> : <Menu size={21} aria-hidden="true" />}
+          </button>
+        </div>
       </div>
     </header>
   );

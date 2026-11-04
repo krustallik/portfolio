@@ -25,8 +25,8 @@ export const slovakProjectContent: Record<ProjectSlug, LocalizedProjectContent> 
   "public-lighting-fault-reporting": {
     name: "Nahlasovanie porúch verejného osvetlenia",
     shortName: "Mapa osvetlenia",
-    description: "Mapa košického verejného osvetlenia prepája hlásenia obyvateľov s pracovným priestorom na správu inventára.",
-    context: "Záverečná práca · Full-stack aplikácia",
+    description: "Mapa pouličného osvetlenia v Košiciach umožňuje prezerať si polohu svietidiel a pripraviť hlásenie poruchy s overenými údajmi o mieste. Správcovia v samostatnom zabezpečenom rozhraní vyhľadávajú a upravujú inventár.",
+    context: "Záverečná práca",
     personalRole: "Individuálna záverečná práca · full-stack vývoj",
     contributions: [
       "Vytvoril som verejnú mapu a viacstupňový formulár na hlásenie porúch vrátane overenia lokality a obsluhovanej oblasti.",
@@ -60,8 +60,8 @@ export const slovakProjectContent: Record<ProjectSlug, LocalizedProjectContent> 
   "booktop-marketplace": {
     name: "Knižné trhovisko Booktop",
     shortName: "Booktop",
-    description: "Internetový obchod zameraný na knihy s vrstveným API v .NET a lokálnym prostredím Docker.",
-    context: "Frontend Developer · päťčlenný tím",
+    description: "Zákazníci si môžu prezerať a filtrovať katalóg kníh, otvárať podrobnosti o produktoch a pridávať ich do košíka. V päťčlennom multidisciplinárnom tíme som sa sústredil na frontend v Next.js a spolupracoval s backendovým vývojárom, dvoma dizajnérmi a DevOps inžinierom.",
+    context: "Frontend vývojár · multidisciplinárny tím",
     personalRole: "Frontend vývojár",
     contributions: [
       "V päťčlennom tíme som sa venoval frontend vývoju a spolupracoval s backend vývojárom, dvoma dizajnérmi a DevOps inžinierom.",
@@ -73,7 +73,7 @@ export const slovakProjectContent: Record<ProjectSlug, LocalizedProjectContent> 
       "Širší systém oddeľuje vrstvy API, aplikácie, domény a infraštruktúry.",
     ],
     galleryNote: "Aktuálne snímky z repozitára používajú syntetické lokálne testovacie údaje a zobrazujú ukrajinské rozhranie aplikácie. V overenom commite nie je anglická sada snímok ani potvrdená verejná demo adresa.",
-    overview: "Booktop je knižné trhovisko s webovým obchodom a viacvrstvovým API v .NET. Projekt vytvoril päťčlenný tím v IT STEP Academy.",
+    overview: "Booktop je obchod s knihami, v ktorom zákazníci môžu vyhľadávať a filtrovať katalóg, prezerať detaily produktov, plniť košík a vytvárať objednávky; systém dopĺňa viacvrstvové API v .NET. Venoval som sa frontendu v Next.js v päťčlennom tíme s jedným backendovým vývojárom, dvoma dizajnérmi UI/UX a DevOps inžinierom.",
     problem: "Produkt mal prepojiť zákaznícke prehliadanie katalógu s používateľskými a firemnými procesmi. Študentský tím zároveň potreboval reálny spôsob koordinácie frontendovej, backendovej, dizajnérskej a infraštruktúrnej práce.",
     capabilities: [
       "Prehliadať kategórie, vyhľadávať a filtrovať katalóg a otvárať stránky s podrobnosťami o produktoch.",
@@ -94,8 +94,8 @@ export const slovakProjectContent: Record<ProjectSlug, LocalizedProjectContent> 
   "gymbeam-shifts": {
     name: "Automatizácia pracovných zmien GymBeam",
     shortName: "Automatizácia zmien",
-    description: "Konfigurovateľný nástroj v C# sleduje zmeny v prehliadači, posiela upozornenia a ponúka správu prevádzky.",
-    context: "Samostatný automatizačný projekt",
+    description: "Bot filtruje ponuky pracovných zmien na portáli tretej strany podľa nastavených dátumov, časov, sviatkov a lokalít a pri zhode sa pokúsi prihlásiť na vybranú zmenu. V samostatnom paneli možno sledovať a spravovať izolované inštancie botov.",
+    context: "Samostatný projekt",
     personalRole: "Samostatný vývojár",
     contributions: [
       "Vytvoril som nástroj v C#, ktorý podľa nastaviteľných pravidiel pre dátum, čas, sviatky, predstih a lokalitu sleduje zmeny na portáli tretej strany.",
@@ -125,8 +125,8 @@ export const slovakProjectContent: Record<ProjectSlug, LocalizedProjectContent> 
   bodycast: {
     name: "Zdravotná analytika BodyCast",
     shortName: "BodyCast",
-    description: "Časová os zdravia a tréningu zobrazuje pôvod údajov aj mieru neistoty modelov.",
-    context: "Osobná full-stack aplikácia",
+    description: "BodyCast spája zdravotné merania, výživu a tréningovú históriu vrátane silových tréningov do osobného prehľadu. Odhady zloženia tela a plánovacie scenáre dopĺňa diagnostikou zdrojových údajov, chýbajúcich hodnôt a aktuálnosti modelu.",
+    context: "Osobná aplikácia",
     personalRole: "Osobná full-stack aplikácia",
     contributions: [
       "Vytvoril som aplikáciu v Next.js a jej vrstvy pre routy, služby jednotlivých funkcií, repozitáre a prácu s dátami cez Prisma.",
@@ -143,7 +143,8 @@ export const slovakProjectContent: Record<ProjectSlug, LocalizedProjectContent> 
     capabilities: [
       "Sledovať merania, vzorky s časovou pečiatkou, tréningy, spánok, aktivitu a výživu.",
       "Prijímať overené dáta zo zdravotnej synchronizácie a podľa dostupnosti zachovať časové údaje zdroja.",
-      "Kontrolovať pokrytie modelu a skúmať predikčné scenáre, keď to aktuálny stav nadväzujúceho modelu umožňuje.",
+      "Spravovať silové tréningové programy a jednotky a kontrolovať pôvod odhadov energie z tréningu aj pokrytie modelu.",
+      "Skúmať predikčné a plánovacie scenáre, keď to aktuálny stav nadväzujúceho modelu umožňuje.",
     ],
     architecture: "Aplikácia v Next.js App Router overuje požiadavky na hraniciach rout a odovzdáva spracovanie službám jednotlivých funkcií a repozitárom. Prisma ukladá zdrojové záznamy a verzované odvodené výsledky v PostgreSQL.",
     limitations: "Predikcie závisia od aktuálneho stavu nadväzujúceho modelu; README uvádza, že lokálna fixture snímky nedokáže vypočítať nový scenár. Verejná adresa momentálne otvára prihlasovaciu stránku a demo účet nie je k dispozícii. Výstupy sú odhady a plánovacie scenáre, nie zdravotné odporúčania.",
@@ -162,7 +163,7 @@ export const slovakProjectContent: Record<ProjectSlug, LocalizedProjectContent> 
   "building-management-app": {
     name: "Aplikácia na správu budov",
     shortName: "Správa budov",
-    description: "Multiplatformová aplikácia na správu budov s rolami a oprávneniami, API procesmi a upozorneniami.",
+    description: "Administrátori spravujú budovy a používateľov, správcovia budov posielajú oznámenia pre pridelené objekty a obyvatelia ich prijímajú v tejto multiplatformovej aplikácii. Prístup podľa rolí oddeľuje tieto pracovné postupy a umožňuje plánovanie upozornení.",
     context: "Full-stack vývojár a koordinátor projektu · päťčlenný tím",
     personalRole: "Full-stack vývojár a koordinátor projektu",
     contributions: [
@@ -199,8 +200,8 @@ export const slovakProjectContent: Record<ProjectSlug, LocalizedProjectContent> 
   "missing-data-tabular-models": {
     name: "Tabuľkové modely s chýbajúcimi údajmi",
     shortName: "Výskum chýbajúcich údajov",
-    description: "Spoluautorská štúdia a experimentálny postup na predikciu bankrotu pri neúplných údajoch.",
-    context: "Spoluautorská technická správa · Aplikovaný výskum",
+    description: "Táto spoluautorská štúdia porovnáva klasické modely, TabPFN a TabICL pri predikcii bankrotu v podmienkach simulovaného chýbania údajov MCAR, MAR a MNAR; výkonnosť hodnotí aj podľa PR-AUC. Hlavný postup v aktuálnom repozitári používa iba taiwanské dáta; širšie výsledky zo správy sú historické a nepodarilo sa ich zopakovať.",
+    context: "Spoluautorská štúdia",
     personalRole: "Spoluautor · integrácia a analýza experimentov",
     contributions: [
       "Štúdiu som spoluautoril s Tarasom Havryliukom. Viedol som veľkú časť integrácie modulov, refaktoringu a koordinácie experimentov.",

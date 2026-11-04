@@ -9,8 +9,8 @@ export const projects: Project[] = [
     name: "Public lighting fault reporting",
     shortName: "Lighting map",
     category: "Full-stack",
-    description: "A Košice streetlight map that connects public reports with an operator inventory workspace.",
-    context: "University thesis · Full-stack application",
+    description: "A Košice streetlight map helps residents explore fixtures and prepare fault reports with validated location details. Operators use a separate authenticated workspace to search and update the inventory.",
+    context: "Thesis project",
     personalRole: "Individual thesis project · Full-stack development",
     contributions: [
       "Built the public map and multi-step report flow with locality and service-area validation.",
@@ -18,6 +18,7 @@ export const projects: Project[] = [
       "Connected the public and admin apps to a shared Node.js API and PostgreSQL/PostGIS data model.",
     ],
     projectStack: ["React", "TypeScript", "Node.js", "Express", "PostgreSQL", "PostGIS", "Docker Compose"],
+    cardTechnologies: ["React", "TypeScript", "Leaflet", "Node.js", "PostGIS"],
     highlights: [
       "Built a public map and multi-step report flow with locality and service-area validation.",
       "Connected an authenticated admin workspace to inventory search, edits, import/export, and audit history.",
@@ -46,14 +47,15 @@ export const projects: Project[] = [
     name: "Booktop marketplace",
     shortName: "Booktop",
     category: "Full-stack",
-    description: "A book-focused storefront backed by a layered .NET API and local-first Docker setup.",
-    context: "Frontend Developer · Five-person team",
+    description: "Shoppers can browse and filter a book catalog, view product details, and add items to a cart. I focused on the Next.js frontend in a five-person cross-functional team spanning backend, DevOps, and design.",
+    context: "Frontend Developer · Cross-functional team",
     personalRole: "Frontend Developer",
     contributions: [
       "Focused on frontend development as the team's frontend developer, collaborating with one backend developer, two designers, and one DevOps engineer.",
       "The screenshots show product and cart flows from the wider application; I do not claim the .NET API or backend features as my work.",
     ],
     projectStack: ["Next.js 16", "React 19", "TypeScript", ".NET 10", "ASP.NET Core", "PostgreSQL", "EF Core", "Redis", "Docker Compose"],
+    cardTechnologies: ["Next.js 16", "React 19", "TypeScript"],
     highlights: [
       "Contributed frontend work in a five-person team alongside backend, design, and DevOps roles.",
       "Worked on a storefront for catalog browsing, search, filtering, product detail, and curated lists.",
@@ -62,7 +64,7 @@ export const projects: Project[] = [
     gallery: galleries["booktop-marketplace"],
     galleryNote: "The current repository screenshots use local synthetic seed data and show the application’s Ukrainian interface. No English screenshot set or verified public demo URL is available at the audited commit.",
     overview:
-      "Booktop is a book marketplace with a web storefront and a multi-layer .NET API. The project was developed by a five-person team at IT Step Academy.",
+      "Booktop is a book storefront with catalog search and filters, product details, a cart, and checkout, supported by a layered .NET API. I focused on the Next.js frontend as part of a five-person team with one backend developer, two UI/UX designers, and one DevOps engineer.",
     problem:
       "The product needed to connect customer catalog journeys with account and company workflows, while giving a student team a realistic way to coordinate frontend, backend, design, and infrastructure work.",
     capabilities: [
@@ -81,14 +83,15 @@ export const projects: Project[] = [
     name: "GymBeam shifts",
     shortName: "Shift automation",
     category: "Automation",
-    description: "A configurable C# shift monitor with browser automation, notifications, and an operations manager.",
-    context: "Independent automation project",
+    description: "The bot filters a third-party shift portal by configured dates, times, holidays, and locations, then attempts to register for matching shifts. A separate dashboard lets me monitor and manage isolated bot instances.",
+    context: "Independent project",
     personalRole: "Independent developer",
     contributions: [
       "Built a C# shift monitor that applies configurable date, time, holiday, lead-time, and location rules to a third-party portal.",
       "Built an ASP.NET Core manager for authenticated operations across isolated bot instances, with health views, bounded logs, and recovery-aware lifecycle controls.",
     ],
     projectStack: ["C#", ".NET 8", "ASP.NET Core", "Selenium", "Chromium", "Docker Compose", "Caddy", "GitHub Actions", "xUnit", "Moq"],
+    cardTechnologies: ["C#", "Selenium", "ASP.NET Core"],
     highlights: [
       "Models time windows, weekday overrides, holidays, lead times, and shift priority as explicit rules.",
       "Uses stable shift identifiers and rebuilds listings after actions that can change pagination.",
@@ -116,14 +119,15 @@ export const projects: Project[] = [
     name: "BodyCast health analytics",
     shortName: "BodyCast",
     category: "Full-stack",
-    description: "A health and training timeline that keeps data provenance and model uncertainty visible.",
-    context: "Personal full-stack application",
+    description: "BodyCast brings health measurements, nutrition, and training history—including strength sessions—into a personal dashboard. It pairs body-composition estimates and planning scenarios with diagnostics for source data, gaps, and model freshness.",
+    context: "Personal application",
     personalRole: "Personal full-stack application",
     contributions: [
       "Built the Next.js application and its route, feature-service, repository, and Prisma data layers.",
       "Implemented health history, training records, data-quality diagnostics, and scenario views that distinguish observations from derived estimates.",
     ],
     projectStack: ["Next.js 16", "React 19", "TypeScript", "PostgreSQL 17", "Prisma 6", "Better Auth", "Vitest", "Playwright"],
+    cardTechnologies: ["Next.js 16", "TypeScript", "PostgreSQL 17", "Prisma 6"],
     highlights: [
       "Keeps unknown measurements unknown and records where workout-energy estimates came from.",
       "Makes model input coverage, freshness, and gaps inspectable rather than showing an unexplained score.",
@@ -138,7 +142,8 @@ export const projects: Project[] = [
     capabilities: [
       "Track measurements, timestamped samples, training sessions, sleep, activity, and nutrition.",
       "Accept validated health-sync payloads and retain source timestamps where available.",
-      "Inspect model coverage and explore forecast scenarios when the current upstream model state supports them.",
+      "Manage strength programs and sessions, then inspect workout-energy provenance and model coverage.",
+      "Explore forecast and goal-planning scenarios when the current upstream model state supports them.",
     ],
     architecture:
       "A Next.js App Router application validates requests at route boundaries and delegates to feature services and repositories. Prisma persists source records and versioned derived results in PostgreSQL.",
@@ -153,7 +158,7 @@ export const projects: Project[] = [
     name: "Building management app",
     shortName: "Building app",
     category: "Mobile",
-    description: "A cross-platform building app with role-scoped administration, API workflows, and notifications.",
+    description: "Administrators manage buildings and users, building managers send notices to assigned properties, and occupants receive them in this cross-platform app. Role-scoped access separates these workflows and supports scheduled notifications.",
     context: "Full-Stack Developer & Project Coordinator · Five-person team",
     personalRole: "Full-Stack Developer & Project Coordinator",
     contributions: [
@@ -162,6 +167,7 @@ export const projects: Project[] = [
       "Joined team meetings and presentations with company representatives and helped use their feedback to guide iterations.",
     ],
     projectStack: ["React Native", "Expo", "TypeScript", "React Navigation", "Node.js", "NestJS", "PostgreSQL", "Prisma", "Jest", "Supertest"],
+    cardTechnologies: ["React Native", "Expo", "TypeScript", "NestJS", "PostgreSQL"],
     highlights: [
       "Built by a five-student team through a university-arranged collaboration with AT&T.",
       "Includes scoped roles for administrators, building managers, and occupants.",
@@ -191,8 +197,8 @@ export const projects: Project[] = [
     name: "Tabular models with missing data",
     shortName: "Missing-data study",
     category: "Research",
-    description: "A co-authored study and experiment pipeline for bankruptcy prediction with incomplete data.",
-    context: "Co-authored technical report · Applied research",
+    description: "This co-authored study compares classical models, TabPFN, and TabICL for bankruptcy prediction under simulated MCAR, MAR, and MNAR missingness, using PR-AUC to assess imbalanced data. The current pipeline is Taiwan-only; broader report results are historical and have not been reproduced from this checkout.",
+    context: "Co-authored study",
     personalRole: "Co-author · Integration and experiment analysis",
     contributions: [
       "Co-authored the study with Taras Havryliuk and led much of the module integration, refactoring, and experiment-run coordination.",
@@ -200,6 +206,7 @@ export const projects: Project[] = [
       "Both authors remain credited; commit totals and compute runs do not capture the full shared research work, so no percentage is assigned.",
     ],
     projectStack: ["Python", "pandas", "NumPy", "SciPy", "scikit-learn", "PyTorch", "TabPFN", "TabICL", "XGBoost", "LightGBM", "CatBoost", "Matplotlib"],
+    cardTechnologies: ["Python", "pandas", "scikit-learn", "TabPFN", "TabICL"],
     highlights: [
       "Simulates MCAR, MAR, and MNAR missingness for controlled experiments.",
       "Includes data preparation, imputation benchmarks, experiment runners, and randomized search.",

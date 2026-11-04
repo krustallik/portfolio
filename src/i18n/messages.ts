@@ -16,8 +16,8 @@ export interface Messages {
     openMenu: string;
     closeMenu: string;
     language: string;
-    switchToEnglish: string;
-    switchToSlovak: string;
+    languageEnglish: string;
+    languageSlovak: string;
   };
   home: {
     heroTitleBefore: string;
@@ -78,9 +78,8 @@ export interface Messages {
     teamContribution: string;
     fivePersonTeam: string;
     frontend: string;
-    otherSkills: string;
+    additionalExperience: string;
     earlierExperience: string;
-    additionalContexts: Record<string, string>;
   };
   approach: {
     label: string;
@@ -186,8 +185,8 @@ const english: Messages = {
     openMenu: "Open navigation menu",
     closeMenu: "Close navigation menu",
     language: "Choose language",
-    switchToEnglish: "Switch language to English",
-    switchToSlovak: "Switch language to Slovak",
+    languageEnglish: "English",
+    languageSlovak: "Slovenčina",
   },
   home: {
     heroTitleBefore: "Software for the",
@@ -246,10 +245,10 @@ const english: Messages = {
     academyStatus: "Completed in 2026",
   },
   skills: {
-    label: "Tools in practice",
-    title: "Breadth with evidence.",
-    description: "Each tool or delivery skill links to the work that supports it. Team-project examples are labeled so the shared contribution stays clear.",
-    note: "Experience varies by tool. Java is earlier experience rather than a current focus.",
+    label: "Evidence from projects",
+    title: "Skills in context.",
+    description: "Each technology links to a repository where I used it. Team contributions are labeled so the shared work stays clear.",
+    note: "The linked projects show the context for each skill; they do not imply the same depth of experience.",
     groups: {
       "Frontend development": "Frontend development",
       "APIs and data": "APIs and data",
@@ -260,13 +259,8 @@ const english: Messages = {
     teamContribution: "team contribution",
     fivePersonTeam: "five-person student team",
     frontend: "frontend",
-    otherSkills: "Also worked with",
+    additionalExperience: "Additional Experience",
     earlierExperience: "Earlier experience",
-    additionalContexts: {
-      "MVS Skills and GymBeam Shifts": "MVS Skills and GymBeam Shifts",
-      "Citizen reporting app": "Citizen reporting app",
-      "Personal spending log": "Personal spending log",
-    },
   },
   approach: {
     label: "How I like to work",
@@ -382,8 +376,8 @@ const slovak: Messages = {
     openMenu: "Otvoriť navigačné menu",
     closeMenu: "Zavrieť navigačné menu",
     language: "Vybrať jazyk",
-    switchToEnglish: "Prepnúť jazyk na angličtinu",
-    switchToSlovak: "Prepnúť jazyk na slovenčinu",
+    languageEnglish: "English",
+    languageSlovak: "Slovenčina",
   },
   home: {
     heroTitleBefore: "Softvér pre",
@@ -442,10 +436,10 @@ const slovak: Messages = {
     academyStatus: "Ukončené v roku 2026",
   },
   skills: {
-    label: "Technológie v praxi",
-    title: "Šírka podložená praxou.",
-    description: "Každá technológia alebo zručnosť súvisí s projektom, ktorý ju dokladá. Pri tímových projektoch je jasne uvedený spoločný charakter práce.",
-    note: "Skúsenosti sa pri jednotlivých technológiách líšia. Java patrí medzi moje staršie skúsenosti a momentálne nie je hlavnou oblasťou.",
+    label: "Dôkazy z projektov",
+    title: "Zručnosti v kontexte.",
+    description: "Každá technológia odkazuje na repozitár, v ktorom som ju použil. Pri tímových projektoch je jasne označený spoločný prínos.",
+    note: "Odkazy ukazujú kontext, v ktorom som technológie použil; nevyjadrujú rovnakú úroveň skúseností.",
     groups: {
       "Frontend development": "Frontend vývoj",
       "APIs and data": "API a dáta",
@@ -456,13 +450,8 @@ const slovak: Messages = {
     teamContribution: "príspevok v rámci tímu",
     fivePersonTeam: "päťčlenný študentský tím",
     frontend: "frontend",
-    otherSkills: "Ďalšie skúsenosti",
+    additionalExperience: "Ďalšie skúsenosti",
     earlierExperience: "Skoršia skúsenosť",
-    additionalContexts: {
-      "MVS Skills and GymBeam Shifts": "MVS Skills a GymBeam Shifts",
-      "Citizen reporting app": "aplikácia na hlásenie problémov",
-      "Personal spending log": "osobný prehľad výdavkov",
-    },
   },
   approach: {
     label: "Ako rád pracujem",

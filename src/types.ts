@@ -21,6 +21,7 @@ export interface Project {
   description: string;
   context: string;
   projectStack: string[];
+  cardTechnologies?: string[];
   personalRole: string;
   contributions: string[];
   highlights: string[];
@@ -74,5 +75,4 @@ export type SkillEvidenceReference =
 export interface AdditionalSkill {
   name: string;
   context: string;
-  additionalWorkSlug?: string;
 }
