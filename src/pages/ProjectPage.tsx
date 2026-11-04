@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowUpRight, Check, GitBranch } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
+import { ProjectGallery } from "../components/ProjectGallery";
 import { getProjectBySlug, projects } from "../data/projects";
 import { usePageMetadata } from "../hooks/usePageMetadata";
 
@@ -40,15 +41,16 @@ export function ProjectPage() {
               {project.demo && <a className="button button-quiet" href={project.demo} target="_blank" rel="noreferrer">{project.demoLabel} <ArrowUpRight size={14} aria-hidden="true" /></a>}
             </div>
           </div>
-          <ul className="detail-tech-list" aria-label="Technologies used">
-            {project.technologies.map((technology) => <li key={technology}>{technology}</li>)}
-          </ul>
+          <div className="detail-project-stack">
+            <p>Project stack</p>
+            <ul className="detail-tech-list" aria-label="Project technology stack">
+              {project.projectStack.map((technology) => <li key={technology}>{technology}</li>)}
+            </ul>
+          </div>
         </div>
-        <figure className={`detail-image${project.imageFit === "contain" ? " detail-image--contain" : ""}`}>
-          <img src={project.image} alt={project.imageAlt} width="1440" height="1000" fetchPriority="high" />
-          <figcaption>{project.imageAlt}. <span>Repository screenshot</span></figcaption>
-        </figure>
       </section>
+
+      <ProjectGallery projectName={project.name} images={project.gallery} note={project.galleryNote} />
 
       <section className="project-story shell" aria-label="Project details">
         <div className="project-story-aside">
@@ -57,7 +59,14 @@ export function ProjectPage() {
         </div>
         <div className="project-story-content">
           <article className="story-block"><h2>Overview</h2><p>{project.overview}</p></article>
-          {project.contribution && <article className="story-block"><h2>My role & contribution</h2><p>{project.contribution}</p></article>}
+          <article className="story-block">
+            <h2>My role & contributions</h2>
+            <p className="story-role"><strong>My role:</strong> {project.personalRole}</p>
+            <h3 className="contribution-heading">My contributions</h3>
+            <ul className="contribution-list">
+              {project.contributions.map((contribution) => <li key={contribution}>{contribution}</li>)}
+            </ul>
+          </article>
           <article className="story-block"><h2>The problem</h2><p>{project.problem}</p></article>
           <article className="story-block"><h2>What it can do</h2><ul className="capability-list">{project.capabilities.map((capability) => <li key={capability}><Check size={16} aria-hidden="true" />{capability}</li>)}</ul></article>
           <article className="story-block"><h2>How it is built</h2><p>{project.architecture}</p></article>

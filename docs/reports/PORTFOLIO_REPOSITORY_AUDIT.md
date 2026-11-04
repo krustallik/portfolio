@@ -36,3 +36,9 @@ I enumerated all 15 public repositories through GitHub's public repository API a
 - **Not selected:** the small Tkinter puzzle app and the third-party `feedaily` fork. The Marketplace fork was retained because its README documents a distinct project and the owner's frontend contribution.
 
 No live demo was inferred from deployment files. BodyCast was opened with a read-only GET and reached its public sign-in page; no account was entered. GymBeam's repository explicitly says it has no public demo URL or account. The building app's README documents a public walkthrough; the exact link returned HTTP 200.
+
+## Screenshot and contribution presentation
+
+- The six featured galleries reference 31 screenshots from the audited GitHub commits: Public Lighting (5), Booktop (5), GymBeam Shifts (2), BodyCast (8), Building Management (7), and Missing Data (4). Each `sourceUrl` in `src/data/project-galleries.json` pins the original repository image to the full audited commit SHA; the site serves optimized local WebP files and thumbnails.
+- Gallery captions keep repository context visible: synthetic data and draft forms, Booktop's Ukrainian interface and lack of verified demo, historical co-authored report charts that were not rerun, and translated Slovak admin labels for Public Lighting.
+- The Building Management card, case study, and skill evidence identify a five-person student project and the owner's **Full-Stack Developer & Project Coordinator** role. The contributions describe frontend/backend and UI/UX work alongside technical support, task assignment, deadline/progress tracking, synchronization, meetings, and presentations. The case study states the university-arranged AT&T collaboration and explicitly excludes employment, endorsement, and ownership claims.

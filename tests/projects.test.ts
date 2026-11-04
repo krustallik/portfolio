@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { additionalWork } from "../src/data/additional-work";
 import { profile } from "../src/data/profile";
+import { skillGroups } from "../src/data/skills";
 import { getFilteredProjects, getProjectBySlug, projects } from "../src/data/projects";
 
 describe("curated project data", () => {
@@ -19,13 +20,44 @@ describe("curated project data", () => {
     expect(getProjectBySlug(projects[0].slug)).toBe(projects[0]);
   });
 
-  it("keeps project roles and limitations grounded in the reviewed repositories", () => {
-    expect(getProjectBySlug("booktop-marketplace")?.contribution).toContain("frontend developer");
-    expect(getProjectBySlug("building-management-app")?.contribution).toContain("Project Coordinator");
-    expect(getProjectBySlug("missing-data-tabular-models")?.contribution).toContain("co-authored");
-    expect(getProjectBySlug("missing-data-tabular-models")?.limitations).toContain("have not been reproduced");
+  it("keeps contribution roles and project stack attribution explicit", () => {
+    const booktop = getProjectBySlug("booktop-marketplace");
+    const building = getProjectBySlug("building-management-app");
+    const research = getProjectBySlug("missing-data-tabular-models");
+    expect(booktop?.context).toBe("Frontend Developer · Five-person team");
+    expect(booktop?.personalRole).toBe("Frontend Developer");
+    expect(booktop?.projectStack).toContain(".NET 10");
+    expect(booktop?.contributions.join(" ")).toContain("do not claim the .NET API");
+    expect(building?.personalRole).toBe("Full-Stack Developer & Project Coordinator");
+    expect(building?.contributions.join(" ")).toContain("both frontend and backend development");
+    expect(building?.contributions.join(" ")).toContain("five-person student team");
+    expect(building?.limitations).toContain("does not imply AT&T employment");
+    expect(research?.personalRole).toContain("Co-author");
+    expect(research?.limitations).toContain("have not been reproduced");
+    expect(research?.highlights.join(" ")).not.toContain("reproducible");
     expect(additionalWork).toHaveLength(5);
     expect(additionalWork.some((item) => item.github.includes("feedaily"))).toBe(false);
+  });
+
+  it("maps each practice skill to personal project evidence and labels team contribution", () => {
+    const skills = skillGroups.flatMap((group) => group.skills);
+    const dotnet = skills.find((skill) => skill.name === "C# · .NET");
+    const reactNative = skills.find((skill) => skill.name === "React Native");
+    const nest = skills.find((skill) => skill.name === "NestJS");
+    const coordination = skills.find((skill) => skill.name === "Project coordination");
+    expect(dotnet?.evidence).toEqual([{ projectSlug: "gymbeam-shifts" }]);
+    expect(reactNative?.evidence).toEqual([{ projectSlug: "building-management-app", context: "team contribution" }]);
+    expect(nest?.evidence).toEqual([{ projectSlug: "building-management-app", context: "team contribution" }]);
+    expect(coordination?.evidence).toEqual([{ projectSlug: "building-management-app", context: "five-person student team" }]);
+    expect(skills.find((skill) => skill.name === "React")?.evidence.some((entry) => "projectSlug" in entry && entry.projectSlug === "booktop-marketplace" && entry.context === "frontend")).toBe(true);
+    expect(skills.some((skill) => skill.name === "Prisma" && skill.evidence.some((entry) => "projectSlug" in entry && entry.projectSlug === "booktop-marketplace"))).toBe(false);
+  });
+
+  it("uses current screenshot collections across every featured case study", () => {
+    expect(projects.map((project) => project.gallery.length)).toEqual([5, 5, 2, 8, 7, 4]);
+    expect(projects.every((project) => project.gallery.every((image) => image.sourceUrl.includes("raw.githubusercontent.com/krustallik/")))).toBe(true);
+    expect(getProjectBySlug("public-lighting-fault-reporting")?.galleryNote).toContain("translated in-browser");
+    expect(getProjectBySlug("missing-data-tabular-models")?.galleryNote).toContain("historical report values");
   });
 
   it("shows the two education paths and the user-provided contact email", () => {
@@ -51,7 +83,7 @@ describe("curated project data", () => {
         qualifications: [
           {
             program: "Software Development — Two-Year Program",
-            status: "Completed",
+            status: "Completed in 2026",
           },
         ],
       },

@@ -1,0 +1,386 @@
+{
+  "public-lighting-fault-reporting": [
+    {
+      "src": "/images/gallery/public-lighting-fault-reporting/public-map-demo.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/public-lighting-fault-reporting/ebd9007808913f177d9b4b6e01dcb60a23755186/docs/images/public-map-demo.png",
+      "alt": "Public map with synthetic streetlight markers around Košice",
+      "caption": "Public map · English interface · Synthetic inventory",
+      "thumbnail": "/images/gallery/public-lighting-fault-reporting/public-map-demo-thumb.webp",
+      "width": 1600,
+      "height": 1000,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 263,
+      "orientation": "landscape"
+    },
+    {
+      "src": "/images/gallery/public-lighting-fault-reporting/public-report-details-demo.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/public-lighting-fault-reporting/ebd9007808913f177d9b4b6e01dcb60a23755186/docs/images/public-report-details-demo.png",
+      "alt": "English report form showing a synthetic Košice location and fault details",
+      "caption": "Report form · Fault details · Synthetic sample",
+      "thumbnail": "/images/gallery/public-lighting-fault-reporting/public-report-details-demo-thumb.webp",
+      "width": 1440,
+      "height": 1546,
+      "thumbnailWidth": 391,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    },
+    {
+      "src": "/images/gallery/public-lighting-fault-reporting/public-report-contact-demo.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/public-lighting-fault-reporting/ebd9007808913f177d9b4b6e01dcb60a23755186/docs/images/public-report-contact-demo.png",
+      "alt": "English report form contact step with a sample attachment",
+      "caption": "Report form · Contact and attachment · No report submitted",
+      "thumbnail": "/images/gallery/public-lighting-fault-reporting/public-report-contact-demo-thumb.webp",
+      "width": 1440,
+      "height": 1000,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 292,
+      "orientation": "landscape"
+    },
+    {
+      "src": "/images/gallery/public-lighting-fault-reporting/admin-dashboard-demo.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/public-lighting-fault-reporting/ebd9007808913f177d9b4b6e01dcb60a23755186/docs/images/admin-dashboard-demo.png",
+      "alt": "Admin dashboard with synthetic inventory and English presentation labels",
+      "caption": "Admin dashboard · Slovak labels translated for presentation",
+      "thumbnail": "/images/gallery/public-lighting-fault-reporting/admin-dashboard-demo-thumb.webp",
+      "width": 1600,
+      "height": 1000,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 263,
+      "orientation": "landscape"
+    },
+    {
+      "src": "/images/gallery/public-lighting-fault-reporting/admin-inventory-demo.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/public-lighting-fault-reporting/ebd9007808913f177d9b4b6e01dcb60a23755186/docs/images/admin-inventory-demo.png",
+      "alt": "Admin inventory table with 48 synthetic records and English presentation labels",
+      "caption": "Inventory · Slovak labels translated for presentation",
+      "thumbnail": "/images/gallery/public-lighting-fault-reporting/admin-inventory-demo-thumb.webp",
+      "width": 1600,
+      "height": 1000,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 263,
+      "orientation": "landscape"
+    }
+  ],
+  "booktop-marketplace": [
+    {
+      "src": "/images/gallery/booktop-marketplace/homepage.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/Marketplace/3fc0bab939cb2ef86814982a296bf957bba90dc4/docs/images/homepage.jpg",
+      "alt": "Booktop desktop home page",
+      "caption": "Storefront home · Desktop · Local development seed data",
+      "thumbnail": "/images/gallery/booktop-marketplace/homepage-thumb.webp",
+      "width": 1440,
+      "height": 1000,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 292,
+      "orientation": "landscape"
+    },
+    {
+      "src": "/images/gallery/booktop-marketplace/catalog.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/Marketplace/3fc0bab939cb2ef86814982a296bf957bba90dc4/docs/images/catalog.jpg",
+      "alt": "Booktop mobile product catalog",
+      "caption": "Product catalog · Mobile · Local development seed data",
+      "thumbnail": "/images/gallery/booktop-marketplace/catalog-thumb.webp",
+      "width": 860,
+      "height": 1864,
+      "thumbnailWidth": 194,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    },
+    {
+      "src": "/images/gallery/booktop-marketplace/product-details.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/Marketplace/3fc0bab939cb2ef86814982a296bf957bba90dc4/docs/images/product-details.jpg",
+      "alt": "Booktop desktop product details page",
+      "caption": "Product details · Desktop",
+      "thumbnail": "/images/gallery/booktop-marketplace/product-details-thumb.webp",
+      "width": 1440,
+      "height": 1000,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 292,
+      "orientation": "landscape"
+    },
+    {
+      "src": "/images/gallery/booktop-marketplace/cart.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/Marketplace/3fc0bab939cb2ef86814982a296bf957bba90dc4/docs/images/cart.jpg",
+      "alt": "Booktop mobile shopping cart with items",
+      "caption": "Shopping cart · Mobile",
+      "thumbnail": "/images/gallery/booktop-marketplace/cart-thumb.webp",
+      "width": 860,
+      "height": 1864,
+      "thumbnailWidth": 194,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    },
+    {
+      "src": "/images/gallery/booktop-marketplace/checkout-payment.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/Marketplace/3fc0bab939cb2ef86814982a296bf957bba90dc4/docs/images/checkout-payment.jpg",
+      "alt": "Booktop desktop checkout form with payment options",
+      "caption": "Checkout and payment screen · Desktop · Interface capture, not a live transaction",
+      "thumbnail": "/images/gallery/booktop-marketplace/checkout-payment-thumb.webp",
+      "width": 1440,
+      "height": 1782,
+      "thumbnailWidth": 339,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    }
+  ],
+  "gymbeam-shifts": [
+    {
+      "src": "/images/gallery/gymbeam-shifts/admin-manager-dashboard.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/GymbeamShifts/9547aff9be2e59b4f6ea729fd3c1c3628cdd56f9/docs/images/admin-manager-dashboard.png",
+      "alt": "Admin Manager dashboard with synthetic demonstration bot statuses",
+      "caption": "Multi-instance operations dashboard · Synthetic demo statuses",
+      "thumbnail": "/images/gallery/gymbeam-shifts/admin-manager-dashboard-thumb.webp",
+      "width": 1664,
+      "height": 949,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 240,
+      "orientation": "landscape"
+    },
+    {
+      "src": "/images/gallery/gymbeam-shifts/bot-configuration.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/GymbeamShifts/9547aff9be2e59b4f6ea729fd3c1c3628cdd56f9/docs/images/bot-configuration.png",
+      "alt": "Shift bot configuration with shared rules and per-weekday start-time exclusions",
+      "caption": "Per-bot shift rules · Synthetic demonstration settings",
+      "thumbnail": "/images/gallery/gymbeam-shifts/bot-configuration-thumb.webp",
+      "width": 1664,
+      "height": 949,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 240,
+      "orientation": "landscape"
+    }
+  ],
+  "bodycast": [
+    {
+      "src": "/images/gallery/bodycast/bodycast-dashboard.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/body-model/1d4055f3be268f744db5aa06c5b139f2c9135a5a/docs/images/bodycast-dashboard.png",
+      "alt": "BodyCast dashboard with synthetic daily health and activity data",
+      "caption": "Daily overview · Desktop · Synthetic local data",
+      "thumbnail": "/images/gallery/bodycast/bodycast-dashboard-thumb.webp",
+      "width": 1600,
+      "height": 1000,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 263,
+      "orientation": "landscape"
+    },
+    {
+      "src": "/images/gallery/bodycast/bodycast-history.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/body-model/1d4055f3be268f744db5aa06c5b139f2c9135a5a/docs/images/bodycast-history.png",
+      "alt": "BodyCast history with synthetic weight, heart-rate, and nutrition trends",
+      "caption": "Health history · Desktop · Synthetic local data",
+      "thumbnail": "/images/gallery/bodycast/bodycast-history-thumb.webp",
+      "width": 1600,
+      "height": 1000,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 263,
+      "orientation": "landscape"
+    },
+    {
+      "src": "/images/gallery/bodycast/bodycast-body-map.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/body-model/1d4055f3be268f744db5aa06c5b139f2c9135a5a/docs/images/bodycast-body-map.png",
+      "alt": "Interactive 3D anatomy view in BodyCast",
+      "caption": "Body Map · Desktop · Training exposure is not connected in this fixture",
+      "thumbnail": "/images/gallery/bodycast/bodycast-body-map-thumb.webp",
+      "width": 1600,
+      "height": 1000,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 263,
+      "orientation": "landscape"
+    },
+    {
+      "src": "/images/gallery/bodycast/bodycast-forecast.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/body-model/1d4055f3be268f744db5aa06c5b139f2c9135a5a/docs/images/bodycast-forecast.png",
+      "alt": "BodyCast forecast chart with recent history, projection, and uncertainty bands",
+      "caption": "Forecast and uncertainty · Desktop · Application-generated synthetic preview",
+      "thumbnail": "/images/gallery/bodycast/bodycast-forecast-thumb.webp",
+      "width": 1600,
+      "height": 1000,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 263,
+      "orientation": "landscape"
+    },
+    {
+      "src": "/images/gallery/bodycast/bodycast-training.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/body-model/1d4055f3be268f744db5aa06c5b139f2c9135a5a/docs/images/bodycast-training.png",
+      "alt": "BodyCast training diary adapted to a phone screen",
+      "caption": "Training diary · Phone · Synthetic local data",
+      "thumbnail": "/images/gallery/bodycast/bodycast-training-thumb.webp",
+      "width": 780,
+      "height": 1688,
+      "thumbnailWidth": 194,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    },
+    {
+      "src": "/images/gallery/bodycast/bodycast-strength-session.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/body-model/1d4055f3be268f744db5aa06c5b139f2c9135a5a/docs/images/bodycast-strength-session.png",
+      "alt": "Phone view of an active strength exercise with its illustration and set logging controls",
+      "caption": "Active strength session · Phone · Synthetic local data",
+      "thumbnail": "/images/gallery/bodycast/bodycast-strength-session-thumb.webp",
+      "width": 780,
+      "height": 1688,
+      "thumbnailWidth": 194,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    },
+    {
+      "src": "/images/gallery/bodycast/bodycast-diagnostics.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/body-model/1d4055f3be268f744db5aa06c5b139f2c9135a5a/docs/images/bodycast-diagnostics.png",
+      "alt": "BodyCast model status and input coverage on a phone screen",
+      "caption": "Model diagnostics · Phone · Synthetic local data",
+      "thumbnail": "/images/gallery/bodycast/bodycast-diagnostics-thumb.webp",
+      "width": 780,
+      "height": 1688,
+      "thumbnailWidth": 194,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    },
+    {
+      "src": "/images/gallery/bodycast/bodycast-stepper-diagnostic.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/body-model/1d4055f3be268f744db5aa06c5b139f2c9135a5a/docs/images/bodycast-stepper-diagnostic.png",
+      "alt": "Phone view of Stepper diagnostics with observed steps and active energy",
+      "caption": "Stepper energy diagnostics · Phone · Synthetic local data",
+      "thumbnail": "/images/gallery/bodycast/bodycast-stepper-diagnostic-thumb.webp",
+      "width": 780,
+      "height": 1688,
+      "thumbnailWidth": 194,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    }
+  ],
+  "building-management-app": [
+    {
+      "src": "/images/gallery/building-management-app/mobile-occupant-notifications.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/university-at-t-software-project/935f0216979c49e6ab36817cebd50a4b1cb0f1d1/docs/images/mobile-occupant-notifications.png",
+      "alt": "Occupant notification history with synthetic notices",
+      "caption": "Occupant view · Notification history · Synthetic data",
+      "thumbnail": "/images/gallery/building-management-app/mobile-occupant-notifications-thumb.webp",
+      "width": 1080,
+      "height": 2400,
+      "thumbnailWidth": 189,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    },
+    {
+      "src": "/images/gallery/building-management-app/mobile-occupant-profile.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/university-at-t-software-project/935f0216979c49e6ab36817cebd50a4b1cb0f1d1/docs/images/mobile-occupant-profile.png",
+      "alt": "Occupant profile and assigned buildings",
+      "caption": "Occupant view · Profile and assigned buildings",
+      "thumbnail": "/images/gallery/building-management-app/mobile-occupant-profile-thumb.webp",
+      "width": 1080,
+      "height": 2400,
+      "thumbnailWidth": 189,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    },
+    {
+      "src": "/images/gallery/building-management-app/mobile-manager-users.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/university-at-t-software-project/935f0216979c49e6ab36817cebd50a4b1cb0f1d1/docs/images/mobile-manager-users.png",
+      "alt": "Building manager viewing users available to the demo account",
+      "caption": "Building manager · Users in assigned buildings · Read-only view",
+      "thumbnail": "/images/gallery/building-management-app/mobile-manager-users-thumb.webp",
+      "width": 1080,
+      "height": 2400,
+      "thumbnailWidth": 189,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    },
+    {
+      "src": "/images/gallery/building-management-app/mobile-manager-notification-form.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/university-at-t-software-project/935f0216979c49e6ab36817cebd50a4b1cb0f1d1/docs/images/mobile-manager-notification-form.png",
+      "alt": "Building manager composing an unsent notification",
+      "caption": "Building manager · Unsent notification draft",
+      "thumbnail": "/images/gallery/building-management-app/mobile-manager-notification-form-thumb.webp",
+      "width": 1080,
+      "height": 2400,
+      "thumbnailWidth": 189,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    },
+    {
+      "src": "/images/gallery/building-management-app/mobile-buildings.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/university-at-t-software-project/935f0216979c49e6ab36817cebd50a4b1cb0f1d1/docs/images/mobile-buildings.png",
+      "alt": "Super admin building management screen",
+      "caption": "Super admin · Building management",
+      "thumbnail": "/images/gallery/building-management-app/mobile-buildings-thumb.webp",
+      "width": 1080,
+      "height": 2400,
+      "thumbnailWidth": 189,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    },
+    {
+      "src": "/images/gallery/building-management-app/mobile-admin-users.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/university-at-t-software-project/935f0216979c49e6ab36817cebd50a4b1cb0f1d1/docs/images/mobile-admin-users.png",
+      "alt": "Super admin user list with administrative controls",
+      "caption": "Super admin · User list",
+      "thumbnail": "/images/gallery/building-management-app/mobile-admin-users-thumb.webp",
+      "width": 1080,
+      "height": 2400,
+      "thumbnailWidth": 189,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    },
+    {
+      "src": "/images/gallery/building-management-app/mobile-admin-add-user.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/university-at-t-software-project/935f0216979c49e6ab36817cebd50a4b1cb0f1d1/docs/images/mobile-admin-add-user.png",
+      "alt": "Super admin creating an unsaved user record",
+      "caption": "Super admin · Unsaved user form",
+      "thumbnail": "/images/gallery/building-management-app/mobile-admin-add-user-thumb.webp",
+      "width": 1080,
+      "height": 2400,
+      "thumbnailWidth": 189,
+      "thumbnailHeight": 420,
+      "orientation": "portrait"
+    }
+  ],
+  "missing-data-tabular-models": [
+    {
+      "src": "/images/gallery/missing-data-tabular-models/dataset-overview.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/missing-data-tabular-models/877a5228465549f2966ccd3fdf097620b5804705/docs/images/dataset-overview.png",
+      "alt": "Dataset overview chart showing class balance, feature count, and native missingness in three processed datasets",
+      "caption": "Dataset overview · Calculated from committed processed CSV files",
+      "thumbnail": "/images/gallery/missing-data-tabular-models/dataset-overview-thumb.webp",
+      "width": 1947,
+      "height": 1067,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 230,
+      "orientation": "landscape"
+    },
+    {
+      "src": "/images/gallery/missing-data-tabular-models/reported-group-pr-auc.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/missing-data-tabular-models/877a5228465549f2966ccd3fdf097620b5804705/docs/images/reported-group-pr-auc.png",
+      "alt": "Historical report-level group-average PR-AUC comparison between foundation and classical models across three datasets",
+      "caption": "Reported PR-AUC · Historical co-authored report values · Not rerun from this checkout",
+      "thumbnail": "/images/gallery/missing-data-tabular-models/reported-group-pr-auc-thumb.webp",
+      "width": 1509,
+      "height": 941,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 262,
+      "orientation": "landscape"
+    },
+    {
+      "src": "/images/gallery/missing-data-tabular-models/reported-imputation-pr-auc.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/missing-data-tabular-models/877a5228465549f2966ccd3fdf097620b5804705/docs/images/reported-imputation-pr-auc.png",
+      "alt": "Historical report-level average PR-AUC for six missing-data strategies",
+      "caption": "Imputation comparison · Historical co-authored report values · Not rerun from this checkout",
+      "thumbnail": "/images/gallery/missing-data-tabular-models/reported-imputation-pr-auc-thumb.webp",
+      "width": 1723,
+      "height": 973,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 237,
+      "orientation": "landscape"
+    },
+    {
+      "src": "/images/gallery/missing-data-tabular-models/reported-missingness-robustness.webp",
+      "sourceUrl": "https://raw.githubusercontent.com/krustallik/missing-data-tabular-models/877a5228465549f2966ccd3fdf097620b5804705/docs/images/reported-missingness-robustness.png",
+      "alt": "Selected historical report-level PR-AUC values at missingness endpoints and by mechanism",
+      "caption": "Missingness response · Historical co-authored report values · Not rerun from this checkout",
+      "thumbnail": "/images/gallery/missing-data-tabular-models/reported-missingness-robustness-thumb.webp",
+      "width": 2278,
+      "height": 955,
+      "thumbnailWidth": 420,
+      "thumbnailHeight": 176,
+      "orientation": "landscape"
+    }
+  ]
+}

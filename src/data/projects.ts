@@ -1,4 +1,7 @@
-import type { Project, ProjectCategory } from "../types";
+import type { Project, ProjectCategory, ProjectGalleryImage } from "../types";
+import galleryData from "./project-galleries.json";
+
+const galleries = galleryData as unknown as Record<string, ProjectGalleryImage[]>;
 
 export const projects: Project[] = [
   {
@@ -8,16 +11,21 @@ export const projects: Project[] = [
     category: "Full-stack",
     description: "A Košice streetlight map that connects public reports with an operator inventory workspace.",
     context: "University thesis · Full-stack application",
-    image: "/images/projects/lighting-map.webp",
-    imageAlt: "Streetlight reporting map with sample inventory markers around Košice",
-    technologies: ["React", "TypeScript", "Node.js", "PostgreSQL", "PostGIS", "Docker"],
+    personalRole: "Individual thesis project · Full-stack development",
+    contributions: [
+      "Built the public map and multi-step report flow with locality and service-area validation.",
+      "Implemented the authenticated operator workspace for inventory search, edits, import/export, and audit history.",
+      "Connected the public and admin apps to a shared Node.js API and PostgreSQL/PostGIS data model.",
+    ],
+    projectStack: ["React", "TypeScript", "Node.js", "Express", "PostgreSQL", "PostGIS", "Docker Compose"],
     highlights: [
       "Built a public map and multi-step report flow with locality and service-area validation.",
       "Connected an authenticated admin workspace to inventory search, edits, import/export, and audit history.",
       "Kept permanent fault history to approved operational metadata, excluding contact details and free text.",
     ],
-    contribution:
-      "I built the thesis application across its public reporting flow and operator workspace, including the shared API and data model. External report delivery remains disabled; a locally persisted report is an application record, not city acceptance.",
+    gallery: galleries["public-lighting-fault-reporting"],
+    galleryNote:
+      "Local Docker captures use synthetic inventory. The admin app currently uses Slovak labels; the two admin screenshots were translated in-browser for presentation. No report was submitted.",
     overview:
       "A thesis project for reporting public streetlight faults in Košice. It brings a citizen-facing map and report flow together with a separate inventory tool for operators.",
     problem:
@@ -39,17 +47,20 @@ export const projects: Project[] = [
     shortName: "Booktop",
     category: "Full-stack",
     description: "A book-focused storefront backed by a layered .NET API and local-first Docker setup.",
-    context: "Five-person team project · Frontend contribution",
-    image: "/images/projects/booktop-storefront.webp",
-    imageAlt: "Booktop book marketplace storefront running with local seed data",
-    technologies: ["Next.js", "React", "TypeScript", ".NET", "PostgreSQL", "Redis", "Docker Compose"],
+    context: "Frontend Developer · Five-person team",
+    personalRole: "Frontend Developer",
+    contributions: [
+      "Focused on frontend development as the team's frontend developer, collaborating with one backend developer, two designers, and one DevOps engineer.",
+      "The screenshots show product and cart flows from the wider application; I do not claim the .NET API or backend features as my work.",
+    ],
+    projectStack: ["Next.js 16", "React 19", "TypeScript", ".NET 10", "ASP.NET Core", "PostgreSQL", "EF Core", "Redis", "Docker Compose"],
     highlights: [
       "Contributed frontend work in a five-person team alongside backend, design, and DevOps roles.",
       "Worked on a storefront for catalog browsing, search, filtering, product detail, and curated lists.",
       "The wider system separates API, application, domain, and infrastructure layers.",
     ],
-    contribution:
-      "I was the team's frontend developer, working with one backend developer, two designers, and one DevOps engineer. My contribution focused on the Next.js storefront and its catalog, product, and cart experiences; I do not claim the backend work.",
+    gallery: galleries["booktop-marketplace"],
+    galleryNote: "The current repository screenshots use local synthetic seed data and show the application’s Ukrainian interface. No English screenshot set or verified public demo URL is available at the audited commit.",
     overview:
       "Booktop is a book marketplace with a web storefront and a multi-layer .NET API. The project was developed by a five-person team at IT Step Academy.",
     problem:
@@ -60,7 +71,7 @@ export const projects: Project[] = [
       "Support account and company operations through the frontend and API.",
     ],
     architecture:
-      "A Next.js and TypeScript client uses an ASP.NET Core API organized into Domain, Application, Infrastructure, and API projects. PostgreSQL, Redis, background jobs, and Docker Compose support the broader system.",
+      "The Next.js and TypeScript client connects to an ASP.NET Core API organized into Domain, Application, Infrastructure, and API projects. PostgreSQL, Redis, background jobs, and Docker Compose support the wider system; the backend stack belongs to the project, not my documented role.",
     limitations:
       "Ihor's documented contribution focused on frontend development. The screenshots use local development seed data, and the repository does not provide a verified public demo URL.",
     github: "https://github.com/krustallik/Marketplace",
@@ -72,14 +83,19 @@ export const projects: Project[] = [
     category: "Automation",
     description: "A configurable C# shift monitor with browser automation, notifications, and an operations manager.",
     context: "Independent automation project",
-    image: "/images/projects/shift-manager.webp",
-    imageAlt: "Shift automation manager showing synthetic bot status cards and controls",
-    technologies: ["C#", ".NET", "Selenium", "ASP.NET Core", "Docker", "GitHub Actions"],
+    personalRole: "Independent developer",
+    contributions: [
+      "Built a C# shift monitor that applies configurable date, time, holiday, lead-time, and location rules to a third-party portal.",
+      "Built an ASP.NET Core manager for authenticated operations across isolated bot instances, with health views, bounded logs, and recovery-aware lifecycle controls.",
+    ],
+    projectStack: ["C#", ".NET 8", "ASP.NET Core", "Selenium", "Chromium", "Docker Compose", "Caddy", "GitHub Actions", "xUnit", "Moq"],
     highlights: [
       "Models time windows, weekday overrides, holidays, lead times, and shift priority as explicit rules.",
       "Uses stable shift identifiers and rebuilds listings after actions that can change pagination.",
       "Manages isolated bot instances with authenticated controls and recovery-aware operations.",
     ],
+    gallery: galleries["gymbeam-shifts"],
+    galleryNote: "These local application captures use synthetic demonstration settings and status data. They do not show a live account or production data.",
     overview:
       "A C# automation system that monitors a third-party shift portal, applies configurable rules, and attempts to register matching shifts. A separate manager operates multiple bot instances.",
     problem:
@@ -102,14 +118,19 @@ export const projects: Project[] = [
     category: "Full-stack",
     description: "A health and training timeline that keeps data provenance and model uncertainty visible.",
     context: "Personal full-stack application",
-    image: "/images/projects/bodycast-overview.webp",
-    imageAlt: "BodyCast daily overview with synthetic health and training data",
-    technologies: ["Next.js", "React", "TypeScript", "PostgreSQL", "Prisma", "Vitest", "Playwright"],
+    personalRole: "Personal full-stack application",
+    contributions: [
+      "Built the Next.js application and its route, feature-service, repository, and Prisma data layers.",
+      "Implemented health history, training records, data-quality diagnostics, and scenario views that distinguish observations from derived estimates.",
+    ],
+    projectStack: ["Next.js 16", "React 19", "TypeScript", "PostgreSQL 17", "Prisma 6", "Better Auth", "Vitest", "Playwright"],
     highlights: [
       "Keeps unknown measurements unknown and records where workout-energy estimates came from.",
       "Makes model input coverage, freshness, and gaps inspectable rather than showing an unexplained score.",
       "Combines health history, training sessions, scenario planning, and an anatomy view in one application.",
     ],
+    gallery: galleries.bodycast,
+    galleryNote: "Screenshots use the English interface and synthetic records from an isolated local database. Desktop captures use a 1,600 px viewport; phone captures use a 390 px viewport.",
     overview:
       "BodyCast brings health measurements, workout history, and model-based body-composition estimates into an inspectable timeline. It treats observed data and derived estimates as different things.",
     problem:
@@ -133,20 +154,23 @@ export const projects: Project[] = [
     shortName: "Building app",
     category: "Mobile",
     description: "A cross-platform building app with role-scoped administration, API workflows, and notifications.",
-    context: "Five-student team · University collaboration with AT&T",
-    image: "/images/projects/building-management-mobile.webp",
-    imageAlt: "Android emulator capture of the building list in the student team's mobile app",
-    imageFit: "contain",
-    technologies: ["React Native", "Expo", "TypeScript", "NestJS", "PostgreSQL", "Prisma"],
+    context: "Full-Stack Developer & Project Coordinator · Five-person team",
+    personalRole: "Full-Stack Developer & Project Coordinator",
+    contributions: [
+      "Contributed to both frontend and backend development, helped with UI/UX, worked through technical challenges, and supported teammates where needed.",
+      "Coordinated the five-person student team by creating and assigning tasks, tracking deadlines and progress, and helping participants stay aligned.",
+      "Joined team meetings and presentations with company representatives and helped use their feedback to guide iterations.",
+    ],
+    projectStack: ["React Native", "Expo", "TypeScript", "React Navigation", "Node.js", "NestJS", "PostgreSQL", "Prisma", "Jest", "Supertest"],
     highlights: [
       "Built by a five-student team through a university-arranged collaboration with AT&T.",
       "Includes scoped roles for administrators, building managers, and occupants.",
       "Combines mobile administration with notifications, scheduled messages, and bulk data operations.",
     ],
-    contribution:
-      "I served as Full-Stack Developer & Project Coordinator in a five-person student team. I created and assigned tasks, tracked deadlines and progress, coordinated the team's work, and supported frontend, backend, and UI/UX work while contributing to the application. The team met regularly with company representatives through the university collaboration.",
+    gallery: galleries["building-management-app"],
+    galleryNote: "Android emulator captures use local synthetic seed data. The notification and user-creation forms shown are drafts and were not submitted.",
     overview:
-      "A cross-platform mobile client and REST API for managing buildings, users, and tenant communications. The team met weekly with company representatives and iterated on feedback.",
+      "A cross-platform mobile client and REST API for managing buildings, users, and tenant communications. This five-person student team project was developed through a university-arranged collaboration with AT&T. The team met weekly with company representatives and iterated on feedback.",
     problem:
       "Building administrators need to manage shared records and communicate with residents while keeping managers' access limited to the buildings they are responsible for.",
     capabilities: [
@@ -169,27 +193,32 @@ export const projects: Project[] = [
     category: "Research",
     description: "A co-authored study and experiment pipeline for bankruptcy prediction with incomplete data.",
     context: "Co-authored technical report · Applied research",
-    image: "/images/projects/missing-data-benchmark.webp",
-    imageAlt: "Dataset overview chart showing class balance, feature counts, and native missing values",
-    technologies: ["Python", "pandas", "NumPy", "scikit-learn", "PyTorch", "TabPFN"],
+    personalRole: "Co-author · Integration and experiment analysis",
+    contributions: [
+      "Co-authored the study with Taras Havryliuk and led much of the module integration, refactoring, and experiment-run coordination.",
+      "Ran the main calculations across two computers and primarily led the cross-model and cross-dataset comparisons, analysis, and later corrections.",
+      "Both authors remain credited; commit totals and compute runs do not capture the full shared research work, so no percentage is assigned.",
+    ],
+    projectStack: ["Python", "pandas", "NumPy", "SciPy", "scikit-learn", "PyTorch", "TabPFN", "TabICL", "XGBoost", "LightGBM", "CatBoost", "Matplotlib"],
     highlights: [
       "Simulates MCAR, MAR, and MNAR missingness for controlled experiments.",
       "Includes data preparation, imputation benchmarks, experiment runners, and randomized search.",
-      "Documents which datasets each pipeline actually runs so comparisons remain reproducible.",
+      "Keeps the current Taiwan-only main experiment scope distinct from the separate three-dataset randomized-search pipeline.",
+      "Includes charts redrawn from historical co-authored report values, clearly separated from current-checkout results.",
     ],
-    contribution:
-      "I co-authored the study with Taras Havryliuk. I led most of the integration and refactoring, coordinated the experiment runs, ran the main calculations across two computers, and led the cross-model and cross-dataset comparisons, analysis, and later corrections. Taras contributed early algorithm components and ran part of the experiments on his hardware. We do not assign a percentage because commit and compute counts do not represent the full research work.",
+    gallery: galleries["missing-data-tabular-models"],
+    galleryNote: "The dataset overview is calculated from committed processed CSVs. The PR-AUC charts redraw historical report values; they were not reproduced from this checkout.",
     overview:
-      "A co-authored study of classical and pretrained tabular models for bankruptcy classification with incomplete features. The repository contains the experiment pipeline; the separate report describes historical results.",
+      "A co-authored study of classical and pretrained tabular models for bankruptcy classification with incomplete features. The repository contains an experiment pipeline and input datasets; the separate technical report records historical results.",
     problem:
       "Bankruptcy datasets can have severe class imbalance and missing features. A useful comparison needs explicit missingness scenarios, repeatable preparation, and clear limits on what each pipeline covers.",
     capabilities: [
-      "Prepare three processed datasets with recorded source attribution and native missingness.",
+      "Includes three processed datasets with recorded source attribution and native missingness.",
       "Simulate MCAR, MAR, and MNAR masks and compare imputation strategies.",
       "Run a configured experiment matrix and a separate randomized hyperparameter-search pipeline.",
     ],
     architecture:
-      "A Python project separates configuration and dataset loading from missingness simulation, split preparation, experiment execution, and randomized search. Requirements and experiment notes are kept in the repository.",
+      "A Python project separates configuration and dataset loading from missingness simulation, split preparation, experiment execution, and randomized search. The main experiment runner is configured for Taiwan; the separate randomized-search script covers three datasets.",
     limitations:
       "The co-authored report is not redistributed in this repository. Its results have not been reproduced from the current checkout: the main pipeline currently activates only the Taiwan dataset, and consolidated benchmark tables are absent. The reported classical and pretrained models also used different tuning budgets, so no equal-budget ranking is claimed here.",
     github: "https://github.com/krustallik/missing-data-tabular-models",

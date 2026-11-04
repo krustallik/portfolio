@@ -12,12 +12,12 @@ export interface Project {
   category: ProjectCategory;
   description: string;
   context: string;
-  image: string;
-  imageAlt: string;
-  imageFit?: "cover" | "contain";
-  technologies: string[];
+  projectStack: string[];
+  personalRole: string;
+  contributions: string[];
   highlights: string[];
-  contribution?: string;
+  gallery: ProjectGalleryImage[];
+  galleryNote: string;
   overview: string;
   problem: string;
   capabilities: string[];
@@ -28,7 +28,21 @@ export interface Project {
   demoLabel?: string;
 }
 
+export interface ProjectGalleryImage {
+  src: string;
+  thumbnail: string;
+  sourceUrl: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+  thumbnailWidth: number;
+  thumbnailHeight: number;
+  orientation: "landscape" | "portrait";
+}
+
 export interface AdditionalWork {
+  slug: string;
   name: string;
   technologies: string;
   description: string;
@@ -37,6 +51,20 @@ export interface AdditionalWork {
 
 export interface SkillGroup {
   title: string;
-  skills: string[];
-  evidence: string;
+  skills: SkillWithEvidence[];
+}
+
+export interface SkillWithEvidence {
+  name: string;
+  evidence: SkillEvidenceReference[];
+}
+
+export type SkillEvidenceReference =
+  | { projectSlug: string; context?: string }
+  | { additionalWorkSlug: string; context?: string };
+
+export interface AdditionalSkill {
+  name: string;
+  context: string;
+  additionalWorkSlug?: string;
 }

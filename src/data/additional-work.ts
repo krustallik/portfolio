@@ -1,7 +1,8 @@
-import type { AdditionalWork } from "../types";
+import type { AdditionalSkill, AdditionalWork } from "../types";
 
 export const additionalWork: AdditionalWork[] = [
   {
+    slug: "northline-storefront",
     name: "Northline storefront",
     technologies: "Django · Python",
     description:
@@ -9,6 +10,7 @@ export const additionalWork: AdditionalWork[] = [
     github: "https://github.com/krustallik/internet_shop_django",
   },
   {
+    slug: "mvs-skills",
     name: "MVS Skills",
     technologies: "ASP.NET Core MVC · C#",
     description:
@@ -16,6 +18,7 @@ export const additionalWork: AdditionalWork[] = [
     github: "https://github.com/krustallik/MVS_Skills",
   },
   {
+    slug: "citizen-reporting",
     name: "Citizen reporting app",
     technologies: "Expo · React Native · Koa",
     description:
@@ -23,6 +26,7 @@ export const additionalWork: AdditionalWork[] = [
     github: "https://github.com/krustallik/finalProject",
   },
   {
+    slug: "personal-spending-log",
     name: "Personal spending log",
     technologies: "Expo · React Native · SQLite",
     description:
@@ -30,12 +34,24 @@ export const additionalWork: AdditionalWork[] = [
     github: "https://github.com/krustallik/MoneyControllMobile",
   },
   {
+    slug: "chess",
     name: "Chess",
     technologies: "C++ · Qt · Stockfish",
     description:
       "A Qt desktop game with local two-player and Stockfish modes, backed by a bundled engine binary.",
     github: "https://github.com/krustallik/Chess",
   },
+];
+
+export function getAdditionalWorkBySlug(slug: string | undefined): AdditionalWork | undefined {
+  return additionalWork.find((item) => item.slug === slug);
+}
+
+export const additionalExperience: AdditionalSkill[] = [
+  { name: "ASP.NET Core", context: "MVS Skills and GymBeam Shifts", additionalWorkSlug: "mvs-skills" },
+  { name: "MongoDB", context: "Citizen reporting app", additionalWorkSlug: "citizen-reporting" },
+  { name: "SQLite", context: "Personal spending log", additionalWorkSlug: "personal-spending-log" },
+  { name: "Java", context: "Earlier experience" },
 ];
 
 export const researchNote = {

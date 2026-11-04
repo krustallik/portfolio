@@ -1,15 +1,40 @@
 import { Fragment, useState } from "react";
 import { ArrowDown, ArrowUpRight, GitBranch, Mail, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import { ProjectAtlas } from "../components/ProjectAtlas";
 import { ProjectCard } from "../components/ProjectCard";
 import { ProjectFilters } from "../components/ProjectFilters";
 import { SectionHeading } from "../components/SectionHeading";
-import { additionalWork, researchNote } from "../data/additional-work";
+import { additionalWork, getAdditionalWorkBySlug, researchNote } from "../data/additional-work";
 import { additionalExperience, skillGroups } from "../data/skills";
 import { profile } from "../data/profile";
-import { getFilteredProjects } from "../data/projects";
+import { getFilteredProjects, getProjectBySlug } from "../data/projects";
 import type { ProjectCategory } from "../types";
 import { usePageMetadata } from "../hooks/usePageMetadata";
+
+function renderSkillEvidence(reference: (typeof skillGroups)[number]["skills"][number]["evidence"][number], index: number) {
+  if ("projectSlug" in reference) {
+    const project = getProjectBySlug(reference.projectSlug);
+    if (!project) return null;
+    return (
+      <Fragment key={`${reference.projectSlug}-${reference.context ?? ""}`}>
+        {index > 0 && <span aria-hidden="true"> · </span>}
+        <Link to={`/projects/${project.slug}`}>{project.shortName}</Link>
+        {reference.context && <span className="evidence-context"> ({reference.context})</span>}
+      </Fragment>
+    );
+  }
+
+  const item = getAdditionalWorkBySlug(reference.additionalWorkSlug);
+  if (!item) return null;
+  return (
+    <Fragment key={`${reference.additionalWorkSlug}-${reference.context ?? ""}`}>
+      {index > 0 && <span aria-hidden="true"> · </span>}
+      <a href={item.github} target="_blank" rel="noreferrer">{item.name}</a>
+      {reference.context && <span className="evidence-context"> ({reference.context})</span>}
+    </Fragment>
+  );
+}
 
 export function HomePage() {
   const [filter, setFilter] = useState<ProjectCategory | "All">("All");
@@ -138,7 +163,7 @@ export function HomePage() {
               label="Tools in practice"
               title="Breadth with evidence."
               titleId="skills-title"
-              description="These groups reflect technologies used in the selected repositories. The project links show where that experience comes from."
+              description="Each tool or delivery skill links to the work that supports it. Team-project examples are labeled so the shared contribution stays clear."
             />
             <p className="skills-note">Experience varies by tool. Java is earlier experience rather than a current focus.</p>
           </div>
@@ -147,12 +172,29 @@ export function HomePage() {
               <article className="skill-group" key={group.title}>
                 <div className="skill-group-top"><span className="skill-index">0{index + 1}</span><span className="skill-group-rule" /></div>
                 <h3>{group.title}</h3>
-                <ul className="skill-pills">{group.skills.map((skill) => <li key={skill}>{skill}</li>)}</ul>
-                <p className="skill-evidence">Evidence: {group.evidence}</p>
+                <ul className="skill-practice-list">
+                  {group.skills.map((skill) => (
+                    <li key={skill.name}>
+                      <span className="skill-practice-name">{skill.name}</span>
+                      <span className="skill-evidence-links">{skill.evidence.map(renderSkillEvidence)}</span>
+                    </li>
+                  ))}
+                </ul>
               </article>
             ))}
           </div>
-          <div className="additional-skills"><span>Also worked with</span>{additionalExperience.map((skill) => <span className="additional-skill" key={skill}>{skill}</span>)}</div>
+          <div className="additional-skills">
+            <span>Also worked with</span>
+            {additionalExperience.map((skill) => {
+              const item = getAdditionalWorkBySlug(skill.additionalWorkSlug);
+              return (
+                <span className="additional-skill" key={skill.name}>
+                  {item ? <a href={item.github} target="_blank" rel="noreferrer">{skill.name}</a> : skill.name}
+                  <span className="additional-skill-context"> · {skill.context}</span>
+                </span>
+              );
+            })}
+          </div>
         </div>
       </section>
 

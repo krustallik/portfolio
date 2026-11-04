@@ -9,17 +9,19 @@ interface ProjectCardProps {
 }
 
 export function ProjectCard({ project, featured = false, wide = false }: ProjectCardProps) {
+  const cover = project.gallery[0];
+
   return (
     <article className={`project-card${featured ? " project-card--featured" : ""}${wide ? " project-card--wide" : ""}`}>
       <Link className="project-card-image" to={`/projects/${project.slug}`} aria-label={`View ${project.name} case study`}>
         <img
-          alt={project.imageAlt}
-          className={project.imageFit === "contain" ? "image-contain" : ""}
+          alt={cover.alt}
+          className={cover.orientation === "portrait" ? "image-contain" : ""}
           decoding="async"
-          height="900"
+          height={cover.height}
           loading="lazy"
-          src={project.image}
-          width="1300"
+          src={cover.src}
+          width={cover.width}
         />
         <span className="image-open" aria-hidden="true"><ArrowUpRight size={19} /></span>
       </Link>
@@ -32,7 +34,7 @@ export function ProjectCard({ project, featured = false, wide = false }: Project
         <p>{project.description}</p>
         <div className="project-card-bottom">
           <ul className="tag-list" aria-label="Technologies">
-            {project.technologies.slice(0, featured ? 5 : 4).map((technology) => <li key={technology}>{technology}</li>)}
+            {project.projectStack.slice(0, featured ? 5 : 4).map((technology) => <li key={technology}>{technology}</li>)}
           </ul>
           <Link className="text-link" to={`/projects/${project.slug}`}>
             Case study <ArrowUpRight size={15} aria-hidden="true" />

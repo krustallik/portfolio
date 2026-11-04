@@ -7,7 +7,9 @@ Date: 4 November 2026
 - Kept the existing React, Vite, and TypeScript visual system and case-study routes.
 - Curated six featured projects from the current state of all 15 public GitHub repositories, with five compact additional links and a research note about unreproduced CFD/PINN results.
 - Added accurate, separate contribution statements for Booktop, the building-management team project, and the co-authored missing-data study.
-- Prefixed the displayed name across the hero, navigation, footer, and page metadata with the user-requested Slovak bachelor title `Bc.`. About / Education shows the completed Computer Science bachelor's degree (2025), current second and final year of Engineering studies (Ing.) at the Technical University of Košice, and completed two-year Software Development program at IT STEP Academy.
+- Built six navigable screenshot galleries with 31 repository captures pinned to the audited commit SHAs. The galleries use optimized local WebP assets, descriptive alt text and captions, original-source links, thumbnails, keyboard controls, swipe navigation, and an accessible lightbox.
+- Made the Building Management case study explicit about both sides of the owner's role: Full-Stack Developer & Project Coordinator. The case study describes frontend/backend and UI/UX contributions, technical support, task and deadline coordination, and the five-person university collaboration with AT&T without implying employment or endorsement. The Tools in Practice section links the project as team evidence for React Native/NestJS and as five-person-team evidence for project coordination.
+- Prefixed the displayed name across the hero, navigation, footer, and page metadata with the user-requested Slovak bachelor title `Bc.`. About / Education shows the completed Computer Science bachelor's degree (2025), current second and final year of Engineering studies (Ing.) at the Technical University of Košice, and the two-year Software Development program completed at IT STEP Academy in 2026.
 - Added the user-provided `ihorhavryliv123@gmail.com` as the single visible email address in the contact card, alongside GitHub.
 - Preserved genuine repository screenshots and added detail to known project boundaries, team context, synthetic data, and public-demo availability.
 - Balanced the final selected-project row at desktop widths and kept the additional work list compact and responsive.
@@ -28,15 +30,15 @@ Date: 4 November 2026
 
 ## Verification results
 
-- `docker compose build portfolio` passed.
-- The Compose Vite service started on `127.0.0.1:5173`. A temporary visible copy change appeared in the browser without navigation or refresh; it was immediately reverted, confirming HMR.
+- `docker compose build` passed using the pinned official Node image and checked-in lockfile.
+- The Compose Vite service ran at `127.0.0.1:5173`. The Playwright HMR smoke changed the hero heading in the mounted source and observed it update in the already-open page without navigation, then confirmed it reverted after the source was restored.
 - `docker compose exec -T portfolio npm run lint` passed.
 - `docker compose exec -T portfolio npm run typecheck` passed.
-- `docker compose exec -T portfolio npm run test:run` passed: 2 files, 6 tests.
+- `docker compose exec -T portfolio npm run test:run` passed: 3 files, 14 tests, including project attribution and gallery navigation, swipe, focus return, and Escape-key behavior.
 - `docker compose exec -T portfolio npm run build` passed and pre-rendered the home page plus six case-study routes. The sitemap remains disabled until a real portfolio domain is configured.
-- `docker compose --profile test run --build --rm e2e` passed after the education correction. It checked the graduate label, separated completed/current TUKE qualifications, IT STEP status, email, repository links, selected-card balance, filters, case-study and unknown-slug routes, screenshots, the mobile menu, reduced motion, uncaught browser errors, and horizontal overflow at 360, 390, 768, 1024, 1440, and 1920 px.
-- The production Compose build and Nginx container are healthy on `127.0.0.1:4173`. The homepage, project routes, social preview, and a project screenshot returned HTTP 200. The runtime reports Nginx 1.29.8 and no Node.js binary.
-- Reviewed the local development and production sites in the browser. Playwright captures, including `portfolio-education.png`, are in `docs/reports/screenshots/`.
+- `docker compose --profile test run --build --rm e2e` passed. It checked the 2025 TUKE bachelor's completion, current final-year Ing. studies, IT STEP completion in 2026, six case-study routes and gallery counts, image loading and frame fit, image-source links, both Building Management role dimensions and team-project boundary, team-technology and project-coordination evidence links, filters, unknown-route handling, touch swipe, keyboard/lightbox behavior, mobile navigation, reduced motion, uncaught browser errors, HMR, and horizontal overflow at 360, 390, 768, 1024, 1440, and 1920 px.
+- The production image was rebuilt with the production Compose project name `profile-production`; its Nginx container is healthy on `127.0.0.1:4173`. The homepage, Building Management route, social preview, health endpoint, and a gallery asset returned HTTP 200. The runtime has no Node.js binary.
+- Opened the production site and Building Management case study in the visible in-app browser. Reviewed the desktop homepage, contribution block, desktop gallery, and mobile gallery captures. Playwright captures are in `docs/reports/screenshots/`.
 
 ## Git and deployment
 
@@ -48,4 +50,5 @@ Date: 4 November 2026
 - A real CV and verified LinkedIn URL were not supplied. Their actions remain hidden/unset.
 - No portfolio domain was supplied; `VITE_SITE_URL` remains empty, so canonical URL and sitemap generation stay disabled.
 - The completed bachelor's year (2025) was supplied; its approximate June month is omitted. No start dates are displayed.
+- A pair of unreferenced Building Management screenshot files generated during initial gallery review remains in the gallery directory; it is not included in the project manifest or rendered by the site.
 - An ignored host `node_modules` directory from setup before the Docker override remains in this workspace. No host Node.js/npm command was used for this refresh. Automatic review blocked its cleanup, so it was left untouched; Compose uses its separate named volume.

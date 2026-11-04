@@ -25,7 +25,7 @@ export const profile = {
       qualifications: [
         {
           program: "Software Development — Two-Year Program",
-          status: "Completed",
+          status: "Completed in 2026",
         },
       ],
     },

@@ -11,6 +11,7 @@
     "test": "vitest",
     "test:run": "vitest run",
     "e2e": "node scripts/e2e.mjs",
+    "gallery:refresh": "node scripts/optimize-gallery-assets.mjs",
     "generate:preview": "node scripts/render-social-preview.mjs",
     "preview": "vite preview --host 0.0.0.0"
   },
