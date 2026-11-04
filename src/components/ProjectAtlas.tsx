@@ -1,13 +1,16 @@
+import { useLocale } from "../i18n/useLocale";
+
 export function ProjectAtlas() {
+  const { messages } = useLocale();
   return (
-    <figure className="atlas-card" aria-label="A diagram of three kinds of engineering work: build, automate, and investigate">
+    <figure className="atlas-card" aria-label={messages.atlas.description}>
       <div className="atlas-card-head">
-        <span>WORK MAP</span>
+        <span>{messages.atlas.label}</span>
         <span className="atlas-index">KE / 01</span>
       </div>
       <svg className="atlas-drawing" viewBox="0 0 540 370" role="img" aria-labelledby="atlas-title atlas-desc">
-        <title id="atlas-title">Engineering work map</title>
-        <desc id="atlas-desc">A connected route runs through application development, automation, and research.</desc>
+        <title id="atlas-title">{messages.atlas.title}</title>
+        <desc id="atlas-desc">{messages.atlas.description}</desc>
         <defs>
           <pattern id="atlas-grid" width="32" height="32" patternUnits="userSpaceOnUse">
             <path d="M 32 0 L 0 0 0 32" fill="none" stroke="currentColor" strokeWidth=".7" opacity=".28" />
@@ -27,13 +30,13 @@ export function ProjectAtlas() {
         </g>
         <circle cx="389" cy="204" r="19" fill="none" stroke="#db9a61" strokeWidth="1.4" />
         <path d="M29 29v30M14 44h30M477 299v30M462 314h30" stroke="#74848a" strokeWidth="1.2" />
-        <text x="25" y="24">N ↑</text>
-        <text x="448" y="355">FIELD / 03</text>
+        <text x="25" y="24">{messages.atlas.north}</text>
+        <text x="448" y="355">{messages.atlas.field}</text>
       </svg>
-      <div className="atlas-label atlas-label--build"><span>01</span><strong>Build</strong><small>applications</small></div>
-      <div className="atlas-label atlas-label--automate"><span>02</span><strong>Automate</strong><small>repeatable work</small></div>
-      <div className="atlas-label atlas-label--research"><span>03</span><strong>Investigate</strong><small>data & systems</small></div>
-      <figcaption>Curiosity becomes something people can use.</figcaption>
+      <div className="atlas-label atlas-label--build"><span>01</span><strong>{messages.atlas.build}</strong><small>{messages.atlas.applications}</small></div>
+      <div className="atlas-label atlas-label--automate"><span>02</span><strong>{messages.atlas.automate}</strong><small>{messages.atlas.repeatableWork}</small></div>
+      <div className="atlas-label atlas-label--research"><span>03</span><strong>{messages.atlas.investigate}</strong><small>{messages.atlas.dataSystems}</small></div>
+      <figcaption>{messages.atlas.caption}</figcaption>
     </figure>
   );
 }

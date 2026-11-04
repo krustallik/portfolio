@@ -1,5 +1,6 @@
 import type { ProjectCategory } from "../types";
 import { projectCategories } from "../data/projects";
+import { useLocale } from "../i18n/useLocale";
 
 interface ProjectFiltersProps {
   value: ProjectCategory | "All";
@@ -7,9 +8,10 @@ interface ProjectFiltersProps {
 }
 
 export function ProjectFilters({ value, onChange }: ProjectFiltersProps) {
+  const { messages } = useLocale();
   const filters: Array<ProjectCategory | "All"> = ["All", ...projectCategories];
   return (
-    <div className="project-filters" role="group" aria-label="Filter projects by category">
+    <div className="project-filters" role="group" aria-label={messages.home.filterLabel}>
       {filters.map((category) => (
         <button
           aria-pressed={value === category}
@@ -18,7 +20,7 @@ export function ProjectFilters({ value, onChange }: ProjectFiltersProps) {
           onClick={() => onChange(category)}
           type="button"
         >
-          {category}
+          {messages.categories[category]}
         </button>
       ))}
     </div>

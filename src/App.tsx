@@ -5,6 +5,8 @@ import { SiteHeader } from "./components/SiteHeader";
 import { HomePage } from "./pages/HomePage";
 import { NotFoundPage } from "./pages/NotFoundPage";
 import { ProjectPage } from "./pages/ProjectPage";
+import { LocaleProvider } from "./i18n/LocaleProvider";
+import { useLocale } from "./i18n/useLocale";
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -18,10 +20,11 @@ function ScrollToTop() {
   return null;
 }
 
-export function AppFrame() {
+function AppContent() {
+  const { messages } = useLocale();
   return (
     <>
-      <a className="skip-link" href="#main-content">Skip to content</a>
+      <a className="skip-link" href="#main-content">{messages.header.skipToContent}</a>
       <SiteHeader />
       <ScrollToTop />
       <Routes>
@@ -32,6 +35,10 @@ export function AppFrame() {
       <SiteFooter />
     </>
   );
+}
+
+export function AppFrame() {
+  return <LocaleProvider><AppContent /></LocaleProvider>;
 }
 
 export function App() {

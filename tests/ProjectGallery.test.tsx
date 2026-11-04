@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import { ProjectGallery } from "../src/components/ProjectGallery";
+import { LocaleProvider } from "../src/i18n/LocaleProvider";
 import type { ProjectGalleryImage } from "../src/types";
 
 function screenshots(count: number): ProjectGalleryImage[] {
@@ -20,7 +21,7 @@ function screenshots(count: number): ProjectGalleryImage[] {
 
 describe("ProjectGallery", () => {
   it.each([1, 2, 5, 8])("renders a %i-image gallery without broken counts", (count) => {
-    const { container } = render(<ProjectGallery projectName="Test project" images={screenshots(count)} note="Synthetic test captures." />);
+    const { container } = render(<LocaleProvider><ProjectGallery projectName="Test project" images={screenshots(count)} note="Synthetic test captures." /></LocaleProvider>);
     expect(screen.getByRole("img", { name: "Test screenshot 1" })).toHaveAttribute("width", "1440");
     if (count === 1) {
       expect(screen.getByRole("group", { name: "Screenshot 1 of 1" })).toBeInTheDocument();
@@ -32,7 +33,7 @@ describe("ProjectGallery", () => {
   });
 
   it("wraps next and previous navigation and follows phone swipe input", () => {
-    render(<ProjectGallery projectName="Test project" images={screenshots(2)} note="Test note." />);
+    render(<LocaleProvider><ProjectGallery projectName="Test project" images={screenshots(2)} note="Test note." /></LocaleProvider>);
     fireEvent.click(screen.getByRole("button", { name: "Previous screenshot" }));
     expect(document.querySelector(".gallery-count")).toHaveTextContent("2 / 2");
     fireEvent.click(screen.getByRole("button", { name: "Next screenshot" }));
@@ -45,7 +46,7 @@ describe("ProjectGallery", () => {
   });
 
   it("opens an accessible lightbox, supports arrow keys and Escape, and restores focus", () => {
-    render(<ProjectGallery projectName="Test project" images={screenshots(2)} note="Test note." />);
+    render(<LocaleProvider><ProjectGallery projectName="Test project" images={screenshots(2)} note="Test note." /></LocaleProvider>);
     const opener = screen.getByRole("button", { name: "Enlarge screenshot 1 of 2: Screen 1" });
     opener.focus();
     fireEvent.click(opener);

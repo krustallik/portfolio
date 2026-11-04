@@ -5,8 +5,16 @@ export type ProjectCategory =
   | "AI & ML"
   | "Research";
 
+export type ProjectSlug =
+  | "public-lighting-fault-reporting"
+  | "booktop-marketplace"
+  | "gymbeam-shifts"
+  | "bodycast"
+  | "building-management-app"
+  | "missing-data-tabular-models";
+
 export interface Project {
-  slug: string;
+  slug: ProjectSlug;
   name: string;
   shortName: string;
   category: ProjectCategory;

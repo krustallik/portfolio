@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type PointerEvent } from "react";
 import { ChevronLeft, ChevronRight, ExternalLink, Maximize2, X } from "lucide-react";
 import type { ProjectGalleryImage } from "../types";
+import { useLocale } from "../i18n/useLocale";
+import { LanguageSwitcher } from "./LanguageSwitcher";
 
 interface ProjectGalleryProps {
   projectName: string;
@@ -9,6 +11,7 @@ interface ProjectGalleryProps {
 }
 
 export function ProjectGallery({ projectName, images, note }: ProjectGalleryProps) {
+  const { messages, format } = useLocale();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const lightboxRef = useRef<HTMLDivElement>(null);
@@ -81,9 +84,9 @@ export function ProjectGallery({ projectName, images, note }: ProjectGalleryProp
   const showControls = images.length > 1;
 
   return (
-    <section className="project-gallery" aria-label={`${projectName} screenshot gallery`}>
+    <section className="project-gallery" aria-label={format(messages.gallery.label, { name: projectName })}>
       <div className="project-gallery-heading">
-        <h2>Screenshots</h2>
+        <h2>{messages.gallery.screenshots}</h2>
         <p>{note}</p>
       </div>
 
@@ -94,14 +97,14 @@ export function ProjectGallery({ projectName, images, note }: ProjectGalleryProp
           onPointerUp={handlePointerUp}
           onPointerCancel={() => { pointerStartX.current = null; }}
           role="group"
-          aria-roledescription="slide"
-          aria-label={`Screenshot ${activeIndex + 1} of ${images.length}`}
+          aria-roledescription={messages.gallery.slide}
+          aria-label={format(messages.gallery.screenshotOf, { current: activeIndex + 1, total: images.length })}
         >
           <button
             className="gallery-expand"
             type="button"
             ref={expandButtonRef}
-            aria-label={`Enlarge screenshot ${activeIndex + 1} of ${images.length}: ${image.caption}`}
+            aria-label={format(messages.gallery.enlarge, { current: activeIndex + 1, total: images.length, caption: image.caption })}
             onClick={() => {
               if (suppressClick.current) return;
               setIsOpen(true);
@@ -116,13 +119,13 @@ export function ProjectGallery({ projectName, images, note }: ProjectGalleryProp
               fetchPriority={activeIndex === 0 ? "high" : "auto"}
               decoding="async"
             />
-            <span className="gallery-expand-label"><Maximize2 size={15} aria-hidden="true" /> Open larger</span>
+            <span className="gallery-expand-label"><Maximize2 size={15} aria-hidden="true" /> {messages.gallery.openLarger}</span>
           </button>
         </div>
         <figcaption className="gallery-caption">
           <span>{image.caption}</span>
           <a href={image.sourceUrl} target="_blank" rel="noreferrer">
-            Original on GitHub <ExternalLink size={13} aria-hidden="true" />
+            {messages.gallery.original} <ExternalLink size={13} aria-hidden="true" />
           </a>
         </figcaption>
       </figure>
@@ -130,23 +133,23 @@ export function ProjectGallery({ projectName, images, note }: ProjectGalleryProp
       {showControls && (
         <>
           <div className="gallery-controls">
-            <button className="gallery-control" type="button" onClick={() => move(-1)} aria-label="Previous screenshot">
+            <button className="gallery-control" type="button" onClick={() => move(-1)} aria-label={messages.gallery.previous}>
               <ChevronLeft size={18} aria-hidden="true" />
             </button>
             <p className="gallery-count" aria-live="polite" aria-atomic="true">
               {activeIndex + 1} <span>/</span> {images.length}
             </p>
-            <button className="gallery-control" type="button" onClick={() => move(1)} aria-label="Next screenshot">
+            <button className="gallery-control" type="button" onClick={() => move(1)} aria-label={messages.gallery.next}>
               <ChevronRight size={18} aria-hidden="true" />
             </button>
           </div>
-          <div className="gallery-thumbnails" role="group" aria-label="Choose a screenshot">
+          <div className="gallery-thumbnails" role="group" aria-label={messages.gallery.choose}>
             {images.map((item, index) => (
               <button
                 className={`gallery-thumbnail${index === activeIndex ? " is-active" : ""}`}
                 type="button"
                 key={item.src}
-                aria-label={`Show screenshot ${index + 1} of ${images.length}: ${item.caption}`}
+                aria-label={format(messages.gallery.show, { current: index + 1, total: images.length, caption: item.caption })}
                 aria-pressed={index === activeIndex}
                 onClick={() => setActiveIndex(index)}
               >
@@ -178,10 +181,11 @@ export function ProjectGallery({ projectName, images, note }: ProjectGalleryProp
           >
             <div className="gallery-lightbox-toolbar">
               <div>
-                <h2 id="gallery-lightbox-title">{projectName} · Screenshot {activeIndex + 1} of {images.length}</h2>
+                <h2 id="gallery-lightbox-title">{projectName} · {format(messages.gallery.screenshotOf, { current: activeIndex + 1, total: images.length })}</h2>
                 <p id="gallery-lightbox-caption">{image.caption}</p>
               </div>
-              <button className="gallery-control gallery-close" type="button" ref={closeButtonRef} onClick={() => setIsOpen(false)} aria-label="Close enlarged screenshot">
+              <LanguageSwitcher variant="lightbox" />
+              <button className="gallery-control gallery-close" type="button" ref={closeButtonRef} onClick={() => setIsOpen(false)} aria-label={messages.gallery.close}>
                 <X size={20} aria-hidden="true" />
               </button>
             </div>
@@ -190,12 +194,12 @@ export function ProjectGallery({ projectName, images, note }: ProjectGalleryProp
             </div>
             {showControls && (
               <div className="gallery-lightbox-controls">
-                <button className="gallery-control" type="button" onClick={() => move(-1)} aria-label="Previous screenshot"><ChevronLeft size={20} aria-hidden="true" /></button>
+                <button className="gallery-control" type="button" onClick={() => move(-1)} aria-label={messages.gallery.previous}><ChevronLeft size={20} aria-hidden="true" /></button>
                 <p>{activeIndex + 1} / {images.length}</p>
-                <button className="gallery-control" type="button" onClick={() => move(1)} aria-label="Next screenshot"><ChevronRight size={20} aria-hidden="true" /></button>
+                <button className="gallery-control" type="button" onClick={() => move(1)} aria-label={messages.gallery.next}><ChevronRight size={20} aria-hidden="true" /></button>
               </div>
             )}
-            <a className="gallery-original-link" href={image.sourceUrl} target="_blank" rel="noreferrer">View original image on GitHub <ExternalLink size={14} aria-hidden="true" /></a>
+            <a className="gallery-original-link" href={image.sourceUrl} target="_blank" rel="noreferrer">{messages.gallery.viewOriginal} <ExternalLink size={14} aria-hidden="true" /></a>
           </div>
         </div>
       )}
