@@ -13,6 +13,15 @@ try {
   await page.goto(baseURL, { waitUntil: "networkidle" });
   await page.getByRole("heading", { name: "Software for the real world." }).waitFor();
   assert.equal(await page.locator(".project-card").count(), 6, "homepage should show six curated projects");
+  assert.equal(await page.locator(".project-card--wide").count(), 1, "the final project should balance the selected-project grid");
+  assert.equal(await page.locator(".hero-name").innerText(), "Bc. Ihor Havryliv");
+  await page.getByRole("heading", { name: "Technical University of Košice" }).waitFor();
+  await page.getByText("Bachelor's degree in Computer Science", { exact: true }).waitFor();
+  await page.getByText("Completed in 2025", { exact: true }).waitFor();
+  await page.getByText("Currently studying · second and final year", { exact: true }).waitFor();
+  await page.getByRole("heading", { name: "IT STEP Academy" }).waitFor();
+  assert.equal(await page.getByRole("link", { name: "ihorhavryliv123@gmail.com" }).getAttribute("href"), "mailto:ihorhavryliv123@gmail.com");
+  assert.equal(await page.locator(".other-work-item").count(), 5, "homepage should include five additional repository links");
   const projectImages = await page.locator(".project-card img").all();
   for (const image of projectImages) {
     await image.evaluate((element) => element.scrollIntoView({ block: "center" }));
@@ -27,6 +36,9 @@ try {
   await page.getByRole("link", { name: "Case study" }).first().click();
   await page.getByRole("heading", { name: "Public lighting fault reporting" }).waitFor();
   await page.getByRole("link", { name: /View source/ }).waitFor();
+  await page.getByRole("heading", { name: "My role & contribution" }).waitFor();
+  await page.goto(`${baseURL}/projects/missing-data-tabular-models`, { waitUntil: "networkidle" });
+  await page.getByText(/have not been reproduced from the current checkout/i).waitFor();
   await page.goto(`${baseURL}/projects/unknown-slug`, { waitUntil: "networkidle" });
   await page.getByRole("heading", { name: "This page is off the map." }).waitFor();
 
@@ -42,6 +54,12 @@ try {
   assert.ok(screenshotImageWidths.every((width) => width > 0), `all screenshot images should load: ${JSON.stringify(screenshotImageWidths)}`);
   await page.evaluate(() => window.scrollTo(0, 0));
   await page.screenshot({ path: `${screenshotDirectory}/portfolio-desktop.png`, fullPage: true });
+  await page.locator("#about").evaluate((section) => section.scrollIntoView({ block: "start", behavior: "instant" }));
+  const educationSectionTop = await page.locator("#about").evaluate((section) => Math.round(section.getBoundingClientRect().top));
+  assert.ok(educationSectionTop >= 0 && educationSectionTop <= 100, `education screenshot should start below the sticky header, got top=${educationSectionTop}`);
+  await page.getByRole("heading", { name: "Technical University of Košice" }).waitFor();
+  await page.screenshot({ path: `${screenshotDirectory}/portfolio-education.png` });
+  await page.goto(baseURL, { waitUntil: "networkidle" });
   for (const width of [360, 390, 768, 1024, 1440, 1920]) {
     await page.setViewportSize({ width, height: 900 });
     const dimensions = await page.evaluate(() => ({
@@ -68,6 +86,13 @@ try {
   }
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(baseURL, { waitUntil: "networkidle" });
+  for (const image of await page.locator(".project-card img").all()) {
+    await image.evaluate((element) => element.scrollIntoView({ block: "center" }));
+    await image.evaluate((element) => element.decode());
+  }
+  const mobileImageWidths = await page.locator(".project-card img").evaluateAll((images) => images.map((image) => image.naturalWidth));
+  assert.ok(mobileImageWidths.every((width) => width > 0), `mobile project screenshots should load: ${JSON.stringify(mobileImageWidths)}`);
+  await page.evaluate(() => window.scrollTo(0, 0));
   await page.emulateMedia({ reducedMotion: "reduce" });
   const reducedMotionDuration = await page.locator(".hero-visual").evaluate((element) => getComputedStyle(element).animationDuration);
   assert.ok(reducedMotionDuration === "1e-05s" || reducedMotionDuration === "0.00001s", `reduced motion should shorten animation, got ${reducedMotionDuration}`);

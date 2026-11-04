@@ -7,7 +7,7 @@ export const projects: Project[] = [
     shortName: "Lighting map",
     category: "Full-stack",
     description: "A Košice streetlight map that connects public reports with an operator inventory workspace.",
-    context: "Bachelor thesis · Full-stack application",
+    context: "University thesis · Full-stack application",
     image: "/images/projects/lighting-map.webp",
     imageAlt: "Streetlight reporting map with sample inventory markers around Košice",
     technologies: ["React", "TypeScript", "Node.js", "PostgreSQL", "PostGIS", "Docker"],
@@ -16,6 +16,8 @@ export const projects: Project[] = [
       "Connected an authenticated admin workspace to inventory search, edits, import/export, and audit history.",
       "Kept permanent fault history to approved operational metadata, excluding contact details and free text.",
     ],
+    contribution:
+      "I built the thesis application across its public reporting flow and operator workspace, including the shared API and data model. External report delivery remains disabled; a locally persisted report is an application record, not city acceptance.",
     overview:
       "A thesis project for reporting public streetlight faults in Košice. It brings a citizen-facing map and report flow together with a separate inventory tool for operators.",
     problem:
@@ -37,7 +39,7 @@ export const projects: Project[] = [
     shortName: "Booktop",
     category: "Full-stack",
     description: "A book-focused storefront backed by a layered .NET API and local-first Docker setup.",
-    context: "Five-person diploma project · Frontend contribution",
+    context: "Five-person team project · Frontend contribution",
     image: "/images/projects/booktop-storefront.webp",
     imageAlt: "Booktop book marketplace storefront running with local seed data",
     technologies: ["Next.js", "React", "TypeScript", ".NET", "PostgreSQL", "Redis", "Docker Compose"],
@@ -46,6 +48,8 @@ export const projects: Project[] = [
       "Worked on a storefront for catalog browsing, search, filtering, product detail, and curated lists.",
       "The wider system separates API, application, domain, and infrastructure layers.",
     ],
+    contribution:
+      "I was the team's frontend developer, working with one backend developer, two designers, and one DevOps engineer. My contribution focused on the Next.js storefront and its catalog, product, and cart experiences; I do not claim the backend work.",
     overview:
       "Booktop is a book marketplace with a web storefront and a multi-layer .NET API. The project was developed by a five-person team at IT Step Academy.",
     problem:
@@ -118,10 +122,10 @@ export const projects: Project[] = [
     architecture:
       "A Next.js App Router application validates requests at route boundaries and delegates to feature services and repositories. Prisma persists source records and versioned derived results in PostgreSQL.",
     limitations:
-      "Forecasts depend on current upstream model state; the README notes that the local capture fixture cannot calculate a fresh scenario. Outputs are estimates and planning scenarios, not medical advice.",
+      "Forecasts depend on current upstream model state; the README notes that the local capture fixture cannot calculate a fresh scenario. The public URL currently opens a sign-in page and no demo account is provided. Outputs are estimates and planning scenarios, not medical advice.",
     github: "https://github.com/krustallik/body-model",
     demo: "https://bodycast.ihorhub.eu",
-    demoLabel: "Open the live app",
+    demoLabel: "View public sign-in",
   },
   {
     slug: "building-management-app",
@@ -139,6 +143,8 @@ export const projects: Project[] = [
       "Includes scoped roles for administrators, building managers, and occupants.",
       "Combines mobile administration with notifications, scheduled messages, and bulk data operations.",
     ],
+    contribution:
+      "I served as Full-Stack Developer & Project Coordinator in a five-person student team. I created and assigned tasks, tracked deadlines and progress, coordinated the team's work, and supported frontend, backend, and UI/UX work while contributing to the application. The team met regularly with company representatives through the university collaboration.",
     overview:
       "A cross-platform mobile client and REST API for managing buildings, users, and tenant communications. The team met weekly with company representatives and iterated on feedback.",
     problem:
@@ -151,7 +157,7 @@ export const projects: Project[] = [
     architecture:
       "An Expo and React Native app communicates with a modular NestJS API. JWT-protected routes apply role checks; Prisma and PostgreSQL support persistence and migrations.",
     limitations:
-      "This is a five-student team project; the repository represents the application as shared work. The screenshots use synthetic local seed data, and the external collaboration does not imply AT&T endorsement.",
+      "This is a five-student team project and the application is shared work. Screenshots use synthetic local seed data. The university-arranged collaboration does not imply AT&T employment, endorsement, or ownership.",
     github: "https://github.com/krustallik/university-at-t-software-project",
     demo: "https://youtu.be/ODJcfr_vB3o",
     demoLabel: "Watch the team walkthrough",
@@ -161,8 +167,8 @@ export const projects: Project[] = [
     name: "Tabular models with missing data",
     shortName: "Missing-data study",
     category: "Research",
-    description: "A reproducible benchmark for bankruptcy prediction under controlled missingness patterns.",
-    context: "Machine-learning research pipeline",
+    description: "A co-authored study and experiment pipeline for bankruptcy prediction with incomplete data.",
+    context: "Co-authored technical report · Applied research",
     image: "/images/projects/missing-data-benchmark.webp",
     imageAlt: "Dataset overview chart showing class balance, feature counts, and native missing values",
     technologies: ["Python", "pandas", "NumPy", "scikit-learn", "PyTorch", "TabPFN"],
@@ -171,8 +177,10 @@ export const projects: Project[] = [
       "Includes data preparation, imputation benchmarks, experiment runners, and randomized search.",
       "Documents which datasets each pipeline actually runs so comparisons remain reproducible.",
     ],
+    contribution:
+      "I co-authored the study with Taras Havryliuk. I led most of the integration and refactoring, coordinated the experiment runs, ran the main calculations across two computers, and led the cross-model and cross-dataset comparisons, analysis, and later corrections. Taras contributed early algorithm components and ran part of the experiments on his hardware. We do not assign a percentage because commit and compute counts do not represent the full research work.",
     overview:
-      "A research benchmark comparing classical and pretrained tabular models for bankruptcy classification when features are incomplete.",
+      "A co-authored study of classical and pretrained tabular models for bankruptcy classification with incomplete features. The repository contains the experiment pipeline; the separate report describes historical results.",
     problem:
       "Bankruptcy datasets can have severe class imbalance and missing features. A useful comparison needs explicit missingness scenarios, repeatable preparation, and clear limits on what each pipeline covers.",
     capabilities: [
@@ -183,7 +191,7 @@ export const projects: Project[] = [
     architecture:
       "A Python project separates configuration and dataset loading from missingness simulation, split preparation, experiment execution, and randomized search. Requirements and experiment notes are kept in the repository.",
     limitations:
-      "The README says the main pipeline currently activates only the Taiwan dataset, while randomized search registers all three. The repository contains experiment code and input data, not committed benchmark result tables; no model ranking is claimed here.",
+      "The co-authored report is not redistributed in this repository. Its results have not been reproduced from the current checkout: the main pipeline currently activates only the Taiwan dataset, and consolidated benchmark tables are absent. The reported classical and pretrained models also used different tuning budgets, so no equal-budget ranking is claimed here.",
     github: "https://github.com/krustallik/missing-data-tabular-models",
   },
 ];

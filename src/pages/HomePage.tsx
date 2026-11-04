@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { ArrowDown, ArrowUpRight, GitBranch, MapPin } from "lucide-react";
+import { Fragment, useState } from "react";
+import { ArrowDown, ArrowUpRight, GitBranch, Mail, MapPin } from "lucide-react";
 import { ProjectAtlas } from "../components/ProjectAtlas";
 import { ProjectCard } from "../components/ProjectCard";
 import { ProjectFilters } from "../components/ProjectFilters";
 import { SectionHeading } from "../components/SectionHeading";
+import { additionalWork, researchNote } from "../data/additional-work";
 import { additionalExperience, skillGroups } from "../data/skills";
 import { profile } from "../data/profile";
 import { getFilteredProjects } from "../data/projects";
@@ -14,20 +15,28 @@ export function HomePage() {
   const [filter, setFilter] = useState<ProjectCategory | "All">("All");
   const visibleProjects = getFilteredProjects(filter);
   usePageMetadata(
-    "Full-stack developer and computer science student",
-    "Ihor Havryliv is a computer science student in Košice, Slovakia, building full-stack applications, automation, and research projects.",
+    "Full-stack developer and Computer Science graduate",
+    `${profile.name} is a Computer Science graduate and engineering student in Košice, Slovakia, building full-stack applications, automation, and research projects.`,
   );
 
   return (
     <main id="main-content">
       <section className="hero shell" aria-labelledby="hero-title">
         <div className="hero-copy">
-          <p className="hero-location"><MapPin size={15} aria-hidden="true" />{profile.name} · {profile.location}</p>
+          <p className="hero-location">
+            <MapPin size={15} aria-hidden="true" />
+            <span className="hero-name">{profile.name}</span>
+            <span className="hero-city">{profile.location}</span>
+          </p>
           <h1 id="hero-title">Software for the <span>real world.</span></h1>
           <p className="hero-lede">
             I build useful applications, connect the systems behind them, and automate work that should not need repeating.
           </p>
-          <p className="hero-positioning">Computer Science student <span aria-hidden="true">/</span> Full-stack development <span aria-hidden="true">/</span> Automation</p>
+          <p className="hero-positioning">
+            {profile.role.split(" · ").map((item, index) => (
+              <Fragment key={item}>{index > 0 && <span aria-hidden="true">/</span>}{item}</Fragment>
+            ))}
+          </p>
           <div className="hero-actions">
             <a className="button button-primary" href="#projects">Explore selected work <ArrowDown size={16} aria-hidden="true" /></a>
             <a className="button button-quiet" href={profile.github} target="_blank" rel="noreferrer"><GitBranch size={17} aria-hidden="true" /> GitHub profile <ArrowUpRight size={14} aria-hidden="true" /></a>
@@ -53,9 +62,39 @@ export function HomePage() {
           <p className="project-result-count" aria-live="polite">Showing {visibleProjects.length} {visibleProjects.length === 1 ? "project" : "projects"}</p>
           <div className="project-grid">
             {visibleProjects.map((project, index) => (
-              <ProjectCard key={project.slug} project={project} featured={filter === "All" && index === 0} />
+              <ProjectCard
+                key={project.slug}
+                project={project}
+                featured={filter === "All" && index === 0}
+                wide={filter === "All" && index === visibleProjects.length - 1 && visibleProjects.length % 2 === 0}
+              />
             ))}
           </div>
+          {filter === "All" && (
+            <section className="other-work" aria-labelledby="other-work-title">
+              <div className="other-work-heading">
+                <p className="eyebrow"><span className="eyebrow-mark" aria-hidden="true" />Beyond the case studies</p>
+                <h3 id="other-work-title">More work, across platforms.</h3>
+              </div>
+              <ul className="other-work-grid">
+                {additionalWork.map((item) => (
+                  <li className="other-work-item" key={item.name}>
+                    <div className="other-work-item-heading">
+                      <h4>{item.name}</h4>
+                      <span>{item.technologies}</span>
+                    </div>
+                    <p>{item.description}</p>
+                    <a href={item.github} target="_blank" rel="noreferrer">
+                      Repository <ArrowUpRight size={14} aria-hidden="true" />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <p className="research-note">
+                Historical thesis note: 2025 OpenFOAM and Modulus results came from a separate steady run and have not been reproduced from the current repositories. The tracked OpenFOAM transient log is incomplete, and the current Modulus checkout has no training result. See <a href={researchNote.openFoam} target="_blank" rel="noreferrer">OpenFOAM</a> and <a href={researchNote.modulus} target="_blank" rel="noreferrer">Modulus</a>.
+              </p>
+            </section>
+          )}
         </div>
       </section>
 
@@ -64,25 +103,30 @@ export function HomePage() {
           <div className="about-copy">
             <SectionHeading label="A bit about me" title="Curious about the whole system." titleId="about-title" />
             <p className="about-lede">
-              I am a computer science student at the Technical University of Košice. I have completed my bachelor’s degree and am finishing the final year of engineering-level studies.
+              I enjoy building software that connects interfaces, APIs, data, and automation into systems people can understand and rely on.
             </p>
             <p>
-              My projects move between web and mobile products, APIs, data, and automation. I enjoy the decisions between those layers: how a user action becomes a reliable workflow, how data stays explainable, and how a project can be run again by someone else.
-            </p>
-            <p>
-              I am looking for a part-time software development role alongside university, based in Košice or remote.
+              My recent work spans web and mobile applications, operations automation, and applied research. I like following a feature from a user action through validation and persistence to the way it runs.
             </p>
             <a className="text-link about-link" href={profile.github} target="_blank" rel="noreferrer">See the source work <ArrowUpRight size={15} aria-hidden="true" /></a>
           </div>
           <div className="education-card">
-            <div className="education-card-label">Education</div>
-            <div className="education-mark" aria-hidden="true">TUKE</div>
-            <h3>Technical University of Košice</h3>
-            <p>Computer Science</p>
-            <div className="education-rule" />
-            <div className="education-stage"><span className="stage-dot" /><div><strong>Bachelor’s degree</strong><span>Completed</span></div></div>
-            <div className="education-stage"><span className="stage-dot stage-dot-current" /><div><strong>Engineering studies</strong><span>Final year in progress</span></div></div>
-            <p className="education-note">No graduation date listed.</p>
+            <h3 className="education-card-label">Education</h3>
+            <div className="education-mark" aria-hidden="true">02</div>
+            {profile.education.map((item, index) => (
+              <div className={`education-record${index > 0 ? " education-record-secondary" : ""}`} key={item.institution}>
+                <h4>{item.institution}</h4>
+                {item.qualifications.map((qualification) => (
+                  <div className="education-qualification" key={qualification.program}>
+                    <p>{qualification.program}</p>
+                    <div className="education-stage">
+                      <span className={`stage-dot${"current" in qualification && qualification.current ? " stage-dot-current" : ""}`} aria-hidden="true" />
+                      <div><strong>{qualification.status}</strong><span>{item.location}</span></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -130,13 +174,12 @@ export function HomePage() {
         <div className="shell contact-layout">
           <div>
             <SectionHeading label="Start a conversation" title="Have a role in mind?" titleId="contact-title" />
-            <p className="contact-description">I am open to part-time software development work while finishing my degree. Košice, hybrid, and suitable remote roles all work for me.</p>
+            <p className="contact-description">I welcome messages about software roles and projects where I could contribute.</p>
           </div>
           <div className="contact-card">
             <span className="contact-card-label">Best way to reach me</span>
-            <a className="contact-github" href={profile.github} target="_blank" rel="noreferrer"><GitBranch size={21} aria-hidden="true" /><span>GitHub profile</span><ArrowUpRight size={18} aria-hidden="true" /></a>
-            <p>Public repositories and contact route</p>
-            <span className="contact-card-handle">github.com/krustallik</span>
+            <a className="contact-primary" href={`mailto:${profile.email}`}><Mail size={21} aria-hidden="true" /><span>{profile.email}</span><ArrowUpRight size={18} aria-hidden="true" /></a>
+            <a className="contact-secondary" href={profile.github} target="_blank" rel="noreferrer"><GitBranch size={15} aria-hidden="true" /> GitHub profile <ArrowUpRight size={13} aria-hidden="true" /></a>
           </div>
         </div>
       </section>

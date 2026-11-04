@@ -21,7 +21,7 @@ export function SiteHeader() {
       <div className="shell header-inner">
         <Link className="brand" to="/" aria-label={`${profile.name} — home`} onClick={() => setMenuOpen(false)}>
           <BrandMark />
-          <span className="brand-name">Ihor Havryliv</span>
+          <span className="brand-name">{profile.name}</span>
         </Link>
         <nav className={`primary-nav${menuOpen ? " is-open" : ""}`} aria-label="Main navigation" id="main-navigation">
           {navItems.map((item) => (

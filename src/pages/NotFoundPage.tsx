@@ -1,9 +1,10 @@
 import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { usePageMetadata } from "../hooks/usePageMetadata";
+import { profile } from "../data/profile";
 
 export function NotFoundPage() {
-  usePageMetadata("Page not found", "This page is not part of Ihor Havryliv's portfolio.");
+  usePageMetadata("Page not found", `This page is not part of ${profile.name}'s portfolio.`);
   return (
     <main className="not-found shell" id="main-content">
       <p className="eyebrow"><span className="eyebrow-mark" aria-hidden="true" />404 · Not found</p>

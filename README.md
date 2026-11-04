@@ -1,6 +1,6 @@
-# Ihor Havryliv — portfolio
+# Bc. Ihor Havryliv — portfolio
 
-A responsive, recruiter-focused portfolio for a computer science student in Košice, Slovakia. It presents six documented GitHub projects as concise case studies and keeps availability, education, skills, and contact information close to the work.
+A responsive, recruiter-focused portfolio for a Computer Science graduate and engineering student in Košice, Slovakia. It presents six documented GitHub projects as concise case studies, links to five additional repositories, and keeps availability, education, skills, and contact information close to the work.
 
 ## Stack
 
@@ -65,11 +65,13 @@ The container serves Nginx on `127.0.0.1:4173` by default. Change `PORT` in `.en
 - Mobile navigation, keyboard focus, skip link, and reduced-motion support
 - Configurable canonical URLs, Open Graph metadata, favicon, and a portfolio-specific social preview
 - Pre-rendered home and project routes with per-page metadata; sitemap output is enabled once a real domain is configured
-- Contact through the verified GitHub profile; no invented email, LinkedIn, CV, or contact form
+- Contact through the user-provided email and verified GitHub profile; no contact form or unverified LinkedIn/CV
+- Education shows a Computer Science bachelor's degree completed in 2025 and second, final-year engineering studies (Ing.) at TUKE, alongside completed two-year Software Development training at IT STEP Academy
+- Five additional repository links and a clear note on the unreproduced historical CFD/PINN thesis results
 
 ## Project content
 
-Edit `src/data/projects.ts`, `src/data/profile.ts`, and `src/data/skills.ts`. Add a real CV before setting `cvUrl` in the profile data. The CV action stays hidden while `cvUrl` is unset. Keep project claims grounded in their repository READMEs and code; team work must be identified as team work.
+Edit the typed content in `src/data/`, including `projects.ts`, `additional-work.ts`, `profile.ts`, and `skills.ts`. Add a real CV before setting `cvUrl` in the profile data. The CV action stays hidden while `cvUrl` is unset. Keep project claims grounded in their repository READMEs and code; team work must be identified as team work.
 
 Project imagery under `public/images/projects/` is converted from README screenshots in the linked repositories. It was checked into the site so the portfolio does not depend on GitHub availability at runtime.
 

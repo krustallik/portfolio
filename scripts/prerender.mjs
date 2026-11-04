@@ -21,7 +21,7 @@ try {
   ]);
   const template = await readFile(new URL("index.html", dist), "utf8");
   const routes = [
-    { path: "/", title: "Full-stack developer and computer science student", description: "Ihor Havryliv is a computer science student in Košice, Slovakia, building full-stack applications, automation, and research projects." },
+    { path: "/", title: "Full-stack developer and Computer Science graduate", description: "Bc. Ihor Havryliv is a Computer Science graduate and engineering student in Košice, Slovakia, building full-stack applications, automation, and research projects." },
     ...projects.map((project) => ({
       path: `/projects/${project.slug}`,
       title: project.name,
@@ -37,7 +37,7 @@ try {
         React.createElement(AppFrame),
       ),
     );
-    const title = `${route.title} · Ihor Havryliv`;
+    const title = `${route.title} · Bc. Ihor Havryliv`;
     const canonical = siteUrl ? `<link rel="canonical" href="${siteUrl}${route.path}" />` : "";
     const image = siteUrl ? `${siteUrl}/social-preview.png` : "/social-preview.png";
     const html = template

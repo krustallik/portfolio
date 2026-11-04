@@ -57,6 +57,7 @@ export function ProjectPage() {
         </div>
         <div className="project-story-content">
           <article className="story-block"><h2>Overview</h2><p>{project.overview}</p></article>
+          {project.contribution && <article className="story-block"><h2>My role & contribution</h2><p>{project.contribution}</p></article>}
           <article className="story-block"><h2>The problem</h2><p>{project.problem}</p></article>
           <article className="story-block"><h2>What it can do</h2><ul className="capability-list">{project.capabilities.map((capability) => <li key={capability}><Check size={16} aria-hidden="true" />{capability}</li>)}</ul></article>
           <article className="story-block"><h2>How it is built</h2><p>{project.architecture}</p></article>

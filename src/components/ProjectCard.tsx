@@ -5,11 +5,12 @@ import type { Project } from "../types";
 interface ProjectCardProps {
   project: Project;
   featured?: boolean;
+  wide?: boolean;
 }
 
-export function ProjectCard({ project, featured = false }: ProjectCardProps) {
+export function ProjectCard({ project, featured = false, wide = false }: ProjectCardProps) {
   return (
-    <article className={`project-card${featured ? " project-card--featured" : ""}`}>
+    <article className={`project-card${featured ? " project-card--featured" : ""}${wide ? " project-card--wide" : ""}`}>
       <Link className="project-card-image" to={`/projects/${project.slug}`} aria-label={`View ${project.name} case study`}>
         <img
           alt={project.imageAlt}

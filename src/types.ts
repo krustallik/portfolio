@@ -17,6 +17,7 @@ export interface Project {
   imageFit?: "cover" | "contain";
   technologies: string[];
   highlights: string[];
+  contribution?: string;
   overview: string;
   problem: string;
   capabilities: string[];
@@ -25,6 +26,13 @@ export interface Project {
   github: string;
   demo?: string;
   demoLabel?: string;
+}
+
+export interface AdditionalWork {
+  name: string;
+  technologies: string;
+  description: string;
+  github: string;
 }
 
 export interface SkillGroup {
