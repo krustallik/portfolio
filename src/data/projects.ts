@@ -197,7 +197,7 @@ export const projects: Project[] = [
     name: "Tabular models with missing data",
     shortName: "Missing-data study",
     category: "Research",
-    description: "This co-authored study compares classical models, TabPFN, and TabICL for bankruptcy prediction under simulated MCAR, MAR, and MNAR missingness, using PR-AUC to assess imbalanced data. The current pipeline is Taiwan-only; broader report results are historical and have not been reproduced from this checkout.",
+    description: "This co-authored study compares classical models, TabPFN, and TabICL for bankruptcy prediction under simulated MCAR, MAR, and MNAR missingness, using PR-AUC to assess imbalanced data.",
     context: "Co-authored study",
     personalRole: "Co-author · Integration and experiment analysis",
     contributions: [

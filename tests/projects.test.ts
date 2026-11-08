@@ -36,7 +36,10 @@ describe("curated project data", () => {
     expect(research?.personalRole).toContain("Co-author");
     expect(research?.limitations).toContain("have not been reproduced");
     expect(research?.highlights.join(" ")).not.toContain("reproducible");
-    expect(additionalWork).toHaveLength(5);
+    expect(additionalWork).toHaveLength(8);
+    expect(additionalWork.map((item) => item.slug)).toContain("python-algorithms");
+    expect(additionalWork.map((item) => item.slug)).toContain("openfoam-drone-flow");
+    expect(additionalWork.map((item) => item.slug)).toContain("modulus-drone-flow");
     expect(additionalWork.some((item) => item.github.includes("feedaily"))).toBe(false);
   });
 

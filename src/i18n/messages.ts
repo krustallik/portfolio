@@ -40,9 +40,6 @@ export interface Messages {
     beyondCaseStudies: string;
     moreWorkTitle: string;
     repository: string;
-    researchNote: string;
-    openFoam: string;
-    modulus: string;
   };
   categories: Record<FilterCategory, string>;
   card: {
@@ -209,9 +206,6 @@ const english: Messages = {
     beyondCaseStudies: "Beyond the case studies",
     moreWorkTitle: "More work, across platforms.",
     repository: "Repository",
-    researchNote: "Historical thesis note: 2025 OpenFOAM and Modulus results came from a separate steady run and have not been reproduced from the current repositories. The tracked OpenFOAM transient log is incomplete, and the current Modulus checkout has no training result. See",
-    openFoam: "OpenFOAM",
-    modulus: "Modulus",
   },
   categories: {
     All: "All",
@@ -336,11 +330,14 @@ const english: Messages = {
     pageMissingDescription: "This page is not part of {name}'s portfolio.",
   },
   additionalWork: {
-    "northline-storefront": { name: "Northline storefront", description: "An English-first storefront prototype with an original synthetic catalog; checkout, payments, and shipping are outside its scope." },
-    "mvs-skills": { name: "MVS Skills", description: "An academic skills directory with search and owner-managed profiles. Demo profiles are synthetic, and production hosting is unverified." },
-    "citizen-reporting": { name: "Citizen reporting app", description: "A mobile reporting prototype with an offline queue; repository screenshots use labeled synthetic reports and locations." },
-    "personal-spending-log": { name: "Personal spending log", description: "An on-device expense and weight tracker. The app has no configured API, cloud sync, or in-app backup." },
-    chess: { name: "Chess", description: "A Qt desktop game with local two-player and Stockfish modes, backed by a bundled engine binary." },
+    "northline-storefront": { name: "Northline storefront", description: "An English-language Django storefront with product search, category filters, discounts, promo codes, customer reviews, and account profiles. A session-based shopping bag carries selected products through the browsing flow." },
+    "mvs-skills": { name: "MVS Skills", description: "An academic skills directory built with ASP.NET Core MVC. Users can create professional profiles, search by name, profession, or skill, upload profile images, and rate other profiles." },
+    "citizen-reporting": { name: "Citizen reporting app", description: "A cross-platform community reporting app for creating reports with a category, photo, and location, then exploring them on a map or calendar. An offline queue syncs reports through a Koa API backed by MongoDB." },
+    "personal-spending-log": { name: "Personal spending log", description: "A mobile tracker for expenses and weight measurements, with date filters, spending summaries, category totals, and weight charts. Records are stored locally in SQLite." },
+    chess: { name: "Chess", description: "A Qt desktop chess game with local two-player and Stockfish modes. It highlights legal destinations and includes controls to resign or restart a game." },
+    "python-algorithms": { name: "Mathemechanic · Grid Sum Puzzle", description: "A Tkinter puzzle game where players select cells to match target sums for every row and column. It includes DFS, backtracking, and forward-checking solvers with step-by-step feedback." },
+    "openfoam-drone-flow": { name: "OpenFOAM Drone Flow Simulation", description: "A transient incompressible RANS case for airflow around a drone body and four propeller blades. The case defines STL geometry, snappyHexMesh setup, boundary conditions, and a k–ε turbulence model." },
+    "modulus-drone-flow": { name: "Drone Flow PINN", description: "A physics-informed neural network prototype for steady three-dimensional airflow around a drone. Its Modulus Sym scripts define velocity and pressure fields with Navier–Stokes and boundary constraints over STL geometry." },
   },
   profile: {
     role: "Computer Science graduate · Engineering student · Full-stack development · Automation",
@@ -400,9 +397,6 @@ const slovak: Messages = {
     beyondCaseStudies: "Ďalšie projekty",
     moreWorkTitle: "Ďalšia práca na rôznych platformách.",
     repository: "Repozitár",
-    researchNote: "Poznámka k staršiemu výskumu: výsledky OpenFOAM a Modulus z roku 2025 pochádzajú zo samostatného ustáleného výpočtu a v aktuálnych repozitároch sa ich nepodarilo zopakovať. Zaznamenaný prechodový log OpenFOAM je neúplný a aktuálny checkout Modulus neobsahuje výsledok trénovania. Pozri",
-    openFoam: "OpenFOAM",
-    modulus: "Modulus",
   },
   categories: {
     All: "Všetky",
@@ -527,11 +521,14 @@ const slovak: Messages = {
     pageMissingDescription: "Táto stránka nie je súčasťou portfólia používateľa {name}.",
   },
   additionalWork: {
-    "northline-storefront": { name: "E-shop Northline", description: "Prototyp e-shopu s rozhraním v angličtine a vlastným syntetickým katalógom. Nákupný proces, platby ani doprava nie sú súčasťou rozsahu." },
-    "mvs-skills": { name: "MVS Skills", description: "Akademický katalóg zručností s vyhľadávaním a profilmi spravovanými ich vlastníkmi. Ukážkové profily sú syntetické a produkčné nasadenie nie je overené." },
-    "citizen-reporting": { name: "Aplikácia na hlásenie problémov", description: "Prototyp mobilnej aplikácie na podávanie hlásení s offline frontom. Snímky v repozitári používajú označené syntetické hlásenia a lokality." },
-    "personal-spending-log": { name: "Osobný prehľad výdavkov", description: "Lokálna aplikácia na evidenciu výdavkov a hmotnosti. Nemá nakonfigurované API, synchronizáciu s cloudom ani zálohovanie v aplikácii." },
-    chess: { name: "Chess", description: "Desktopová hra v Qt s lokálnym režimom pre dvoch hráčov a režimom Stockfish. Súčasťou repozitára je binárny súbor šachového enginu." },
+    "northline-storefront": { name: "E-shop Northline", description: "Internetový obchod v Djangu s katalógom produktov, vyhľadávaním a filtrovaním podľa kategórií. Obsahuje zľavy a promo kódy, zákaznícke recenzie, používateľské účty a košík uložený v relácii." },
+    "mvs-skills": { name: "MVS Skills", description: "Akademický katalóg zručností vytvorený v ASP.NET Core MVC. Umožňuje vytvárať profesijné profily, vyhľadávať podľa mena, profesie či zručnosti, nahrávať obrázky profilu a hodnotiť ostatné profily." },
+    "citizen-reporting": { name: "Aplikácia na hlásenie problémov", description: "Multiplatformová aplikácia na podávanie komunitných hlásení s kategóriou, fotografiou a polohou. Mapový a kalendárový prehľad dopĺňa offline front, ktorý po obnovení pripojenia synchronizuje hlásenia cez Koa API s MongoDB." },
+    "personal-spending-log": { name: "Osobný prehľad výdavkov", description: "Mobilná aplikácia na evidenciu výdavkov a meraní hmotnosti s filtrom podľa dátumu, súhrnmi, kategóriami a grafom hmotnosti. Záznamy ukladá lokálne do SQLite." },
+    chess: { name: "Chess", description: "Šachová desktopová aplikácia v Qt s lokálnou hrou pre dvoch a režimom proti Stockfishu. Zvýrazňuje možné ťahy a ponúka ovládanie na vzdanie a nový začiatok hry." },
+    "python-algorithms": { name: "Mathemechanic · Číselná mriežka", description: "Logická hra v Tkinteri, v ktorej výberom buniek dosiahneš cieľové súčty v každom riadku a stĺpci. Obsahuje algoritmy DFS, backtracking a forward checking s priebežnou spätnou väzbou." },
+    "openfoam-drone-flow": { name: "OpenFOAM: prúdenie okolo dronu", description: "Neustálený nestlačiteľný RANS model prúdenia okolo tela dronu a štyroch vrtúľ. Prípad definuje STL geometriu, tvorbu siete pomocou snappyHexMesh, okrajové podmienky a model turbulencie k–ε." },
+    "modulus-drone-flow": { name: "Prúdenie okolo dronu · PINN", description: "Prototyp neurónovej siete s fyzikálnymi obmedzeniami na modelovanie ustáleného trojrozmerného prúdenia okolo dronu. Skripty v NVIDIA Modulus Sym definujú rýchlostné a tlakové polia podľa Navierových–Stokesových rovníc a okrajových podmienok nad STL geometriou." },
   },
   profile: {
     role: "Absolvent informatiky · študent inžinierskeho štúdia · full-stack vývoj · automatizácia",

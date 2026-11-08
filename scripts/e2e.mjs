@@ -24,7 +24,7 @@ const englishSummaries = [
   ["GymBeam shifts", "The bot filters a third-party shift portal by configured dates, times, holidays, and locations, then attempts to register for matching shifts. A separate dashboard lets me monitor and manage isolated bot instances."],
   ["BodyCast health analytics", "BodyCast brings health measurements, nutrition, and training history—including strength sessions—into a personal dashboard. It pairs body-composition estimates and planning scenarios with diagnostics for source data, gaps, and model freshness."],
   ["Building management app", "Administrators manage buildings and users, building managers send notices to assigned properties, and occupants receive them in this cross-platform app. Role-scoped access separates these workflows and supports scheduled notifications."],
-  ["Tabular models with missing data", "This co-authored study compares classical models, TabPFN, and TabICL for bankruptcy prediction under simulated MCAR, MAR, and MNAR missingness, using PR-AUC to assess imbalanced data. The current pipeline is Taiwan-only; broader report results are historical and have not been reproduced from this checkout."],
+  ["Tabular models with missing data", "This co-authored study compares classical models, TabPFN, and TabICL for bankruptcy prediction under simulated MCAR, MAR, and MNAR missingness, using PR-AUC to assess imbalanced data."],
 ];
 const slovakSummaries = [
   ["Nahlasovanie porúch verejného osvetlenia", "Mapa pouličného osvetlenia v Košiciach umožňuje prezerať si polohu svietidiel a pripraviť hlásenie poruchy s overenými údajmi o mieste. Správcovia v samostatnom zabezpečenom rozhraní vyhľadávajú a upravujú inventár."],
@@ -32,7 +32,7 @@ const slovakSummaries = [
   ["Automatizácia pracovných zmien GymBeam", "Bot filtruje ponuky pracovných zmien na portáli tretej strany podľa nastavených dátumov, časov, sviatkov a lokalít a pri zhode sa pokúsi prihlásiť na vybranú zmenu. V samostatnom paneli možno sledovať a spravovať izolované inštancie botov."],
   ["Zdravotná analytika BodyCast", "BodyCast spája zdravotné merania, výživu a tréningovú históriu vrátane silových tréningov do osobného prehľadu. Odhady zloženia tela a plánovacie scenáre dopĺňa diagnostikou zdrojových údajov, chýbajúcich hodnôt a aktuálnosti modelu."],
   ["Aplikácia na správu budov", "Administrátori spravujú budovy a používateľov, správcovia budov posielajú oznámenia pre pridelené objekty a obyvatelia ich prijímajú v tejto multiplatformovej aplikácii. Prístup podľa rolí oddeľuje tieto pracovné postupy a umožňuje plánovanie upozornení."],
-  ["Tabuľkové modely s chýbajúcimi údajmi", "Táto spoluautorská štúdia porovnáva klasické modely, TabPFN a TabICL pri predikcii bankrotu v podmienkach simulovaného chýbania údajov MCAR, MAR a MNAR; výkonnosť hodnotí aj podľa PR-AUC. Hlavný postup v aktuálnom repozitári používa iba taiwanské dáta; širšie výsledky zo správy sú historické a nepodarilo sa ich zopakovať."],
+  ["Tabuľkové modely s chýbajúcimi údajmi", "Táto spoluautorská štúdia porovnáva klasické modely, TabPFN a TabICL pri predikcii bankrotu v podmienkach simulovaného chýbania údajov MCAR, MAR a MNAR; výkonnosť hodnotí aj podľa PR-AUC."],
 ];
 
 async function chooseLanguage(picker, language) {
@@ -115,7 +115,7 @@ try {
   const buildingCard = page.locator(".project-card").filter({ hasText: "Building management app" });
   await buildingCard.getByText(/Full-Stack Developer & Project Coordinator/).waitFor();
   assert.equal(await page.getByRole("link", { name: "ihorhavryliv123@gmail.com" }).getAttribute("href"), "mailto:ihorhavryliv123@gmail.com");
-  assert.equal(await page.locator(".other-work-item").count(), 5, "homepage should include five additional repository links");
+  assert.equal(await page.locator(".other-work-item").count(), 8, "homepage should include eight additional repository links");
   const booktopCard = page.locator(".project-card").filter({ has: page.getByRole("heading", { name: "Booktop marketplace", exact: true }) });
   assert.match(await booktopCard.locator(".project-card-meta").innerText(), /Frontend Developer · Cross-functional team/i);
   assert.doesNotMatch(await booktopCard.locator(".tag-list").innerText(), /\.NET|ASP\.NET/i, "Booktop homepage badges should show frontend evidence only");

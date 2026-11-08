@@ -200,7 +200,7 @@ export const slovakProjectContent: Record<ProjectSlug, LocalizedProjectContent> 
   "missing-data-tabular-models": {
     name: "Tabuľkové modely s chýbajúcimi údajmi",
     shortName: "Výskum chýbajúcich údajov",
-    description: "Táto spoluautorská štúdia porovnáva klasické modely, TabPFN a TabICL pri predikcii bankrotu v podmienkach simulovaného chýbania údajov MCAR, MAR a MNAR; výkonnosť hodnotí aj podľa PR-AUC. Hlavný postup v aktuálnom repozitári používa iba taiwanské dáta; širšie výsledky zo správy sú historické a nepodarilo sa ich zopakovať.",
+    description: "Táto spoluautorská štúdia porovnáva klasické modely, TabPFN a TabICL pri predikcii bankrotu v podmienkach simulovaného chýbania údajov MCAR, MAR a MNAR; výkonnosť hodnotí aj podľa PR-AUC.",
     context: "Spoluautorská štúdia",
     personalRole: "Spoluautor · integrácia a analýza experimentov",
     contributions: [

@@ -5,7 +5,7 @@ import { ProjectAtlas } from "../components/ProjectAtlas";
 import { ProjectCard } from "../components/ProjectCard";
 import { ProjectFilters } from "../components/ProjectFilters";
 import { SectionHeading } from "../components/SectionHeading";
-import { additionalWork, getAdditionalWorkBySlug, researchNote } from "../data/additional-work";
+import { additionalWork, getAdditionalWorkBySlug } from "../data/additional-work";
 import { additionalExperience, skillGroups } from "../data/skills";
 import { profile } from "../data/profile";
 import { getFilteredProjects, getProjectBySlug } from "../data/projects";
@@ -130,9 +130,6 @@ export function HomePage() {
                   );
                 })}
               </ul>
-              <p className="research-note">
-                {messages.home.researchNote} <a href={researchNote.openFoam} target="_blank" rel="noreferrer">{messages.home.openFoam}</a> {locale === "en" ? "and" : "a"} <a href={researchNote.modulus} target="_blank" rel="noreferrer">{messages.home.modulus}</a>.
-              </p>
             </section>
           )}
         </div>
