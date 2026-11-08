@@ -226,6 +226,7 @@ try {
   assert.equal(await page.getByRole("menuitemradio", { name: "Slovenčina" }).evaluate((element) => element === document.activeElement), true, "ArrowDown should move through language options");
   await page.keyboard.press("Escape");
   await page.getByRole("menu").waitFor({ state: "detached" });
+  await page.waitForFunction(() => document.activeElement === document.querySelector(".language-picker--navigation .language-trigger"));
   assert.equal(await languageTrigger.evaluate((element) => element === document.activeElement), true, "Escape should return focus to the language trigger");
   await languageTrigger.click();
   await page.locator(".site-header").screenshot({ path: `${screenshotDirectory}/language-picker-desktop-en.png` });
