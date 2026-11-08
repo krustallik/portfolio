@@ -85,7 +85,7 @@ jobs:
           run_attempt="$(jq -r '.run_attempt' "$RUNNER_TEMP/portfolio-ci-run.json")"
           artifact_name="portfolio-dist-$SOURCE_SHA-$run_attempt"
           artifact_count="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN_ID/artifacts" \
-            --jq --arg name "$artifact_name" '[.artifacts[] | select(.name == $name and .expired == false)] | length')"
+            | jq --arg name "$artifact_name" '[.artifacts[] | select(.name == $name and .expired == false)] | length')"
           [[ "$artifact_count" == "1" ]] || {
             echo "::error::The exact-SHA CI artifact is missing, expired, or ambiguous."
             exit 1
