@@ -2,42 +2,106 @@ name: Portfolio CI
 
 on:
   push:
-    branches: [main, master]
+    branches: [main]
   pull_request:
 
 permissions:
   contents: read
 
+concurrency:
+  group: portfolio-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   verify:
+    name: Verify and package ${{ github.sha }}
     runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      VITE_SITE_URL: ${{ vars.PORTFOLIO_SITE_URL }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+
+      - name: Validate the configured public URL
+        run: |
+          set -Eeuo pipefail
+          [[ "$VITE_SITE_URL" =~ ^https://[A-Za-z0-9.-]+$ ]] || {
+            echo "::error::PORTFOLIO_SITE_URL must be an HTTPS origin without a trailing slash."
+            exit 1
+          }
+
       - name: Start Dockerized development server
-        run: docker compose up -d --build portfolio
-      - name: Lint, types, tests, and static build
+        run: docker compose -p portfolio-ci-dev up -d --build portfolio
+
+      - name: Lint, typecheck, and unit tests in Docker
         run: |
-          docker compose exec -T portfolio npm run lint
-          docker compose exec -T portfolio npm run typecheck
-          docker compose exec -T portfolio npm run test:run
-          docker compose exec -T portfolio npm run build
-      - name: Browser smoke and responsive checks
-        run: docker compose --profile test run --build --rm e2e
-      - name: Build the production image
-        run: docker compose -f compose.production.yaml build --pull
-      - name: Start and health-check production Nginx
+          docker compose -p portfolio-ci-dev exec -T portfolio npm run lint
+          docker compose -p portfolio-ci-dev exec -T portfolio npm run typecheck
+          docker compose -p portfolio-ci-dev exec -T portfolio npm run test:run
+
+      - name: Browser and responsive checks in Docker
+        run: docker compose -p portfolio-ci-dev --profile test run --build --rm e2e
+
+      - name: Build production Nginx image
+        run: docker compose -p portfolio-ci-prod -f compose.production.yaml build --pull portfolio
+
+      - name: Validate the VPS Nginx configuration in its runtime image
+        run: docker compose -p portfolio-ci-prod -f compose.production.yaml --profile config-test run --rm nginx-vps-config-test
+
+      - name: Preview production routes and assets
+        env:
+          PORT: 4273
         run: |
-          docker compose -f compose.production.yaml up -d
-          for attempt in $(seq 1 15); do
-            if curl --fail --silent http://127.0.0.1:4173/health; then
-              exit 0
+          set -Eeuo pipefail
+          docker compose -p portfolio-ci-prod -f compose.production.yaml up -d portfolio
+          healthy=0
+          for attempt in $(seq 1 20); do
+            if curl --fail --silent http://127.0.0.1:4273/health >/dev/null; then
+              healthy=1
+              break
             fi
             sleep 2
           done
-          docker compose -f compose.production.yaml logs
-          exit 1
-      - name: Stop project containers
+          [[ "$healthy" == 1 ]]
+          curl --fail --silent --show-error http://127.0.0.1:4273/ -o "$RUNNER_TEMP/portfolio-home.html"
+          curl --fail --silent --show-error http://127.0.0.1:4273/projects/bodycast -o /dev/null
+          grep -Fq 'Bc. Ihor Havryliv' "$RUNNER_TEMP/portfolio-home.html"
+          js_path="$(grep -oE 'src="[^"]+\.js"' "$RUNNER_TEMP/portfolio-home.html" | head -n 1 | cut -d '"' -f 2)"
+          css_path="$(grep -oE 'href="[^"]+\.css"' "$RUNNER_TEMP/portfolio-home.html" | head -n 1 | cut -d '"' -f 2)"
+          [[ "$js_path" == /assets/* && "$css_path" == /assets/* ]]
+          curl --fail --silent --show-error "http://127.0.0.1:4273$js_path" -o /dev/null
+          curl --fail --silent --show-error "http://127.0.0.1:4273$css_path" -o /dev/null
+
+      - name: Browser smoke against the production Nginx container
+        run: docker compose -p portfolio-ci-prod -f compose.production.yaml --profile production-test run --build --rm e2e-production
+
+      - name: Export the exact-SHA static build through Compose
+        env:
+          PORTFOLIO_ARTIFACT_DIR: ${{ runner.temp }}/portfolio-dist
+        run: |
+          set -Eeuo pipefail
+          mkdir -p "$PORTFOLIO_ARTIFACT_DIR" "$RUNNER_TEMP/portfolio-artifact/site"
+          docker compose -p portfolio-ci-artifact -f compose.production.yaml --profile artifact run --build --rm artifact-export
+          cp -a "$PORTFOLIO_ARTIFACT_DIR/." "$RUNNER_TEMP/portfolio-artifact/site/"
+          printf '{"sha":"%s","run_id":"%s","run_attempt":"%s","site_url":"%s"}\n' \
+            "$GITHUB_SHA" "$GITHUB_RUN_ID" "$GITHUB_RUN_ATTEMPT" "$VITE_SITE_URL" \
+            > "$RUNNER_TEMP/portfolio-artifact/manifest.json"
+
+      - name: Upload static build for this commit and run attempt
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: portfolio-dist-${{ github.sha }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/portfolio-artifact/
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
+
+      - name: Stop only this workflow's containers
         if: always()
         run: |
-          docker compose -f compose.production.yaml down
-          docker compose down
+          docker compose -p portfolio-ci-artifact -f compose.production.yaml down || true
+          docker compose -p portfolio-ci-prod -f compose.production.yaml down || true
+          docker compose -p portfolio-ci-dev down || true

@@ -15,3 +15,34 @@ services:
       timeout: 3s
       retries: 3
       start_period: 5s
+
+  artifact-export:
+    profiles: ["artifact"]
+    build:
+      context: .
+      target: build
+      args:
+        VITE_SITE_URL: ${VITE_SITE_URL:-}
+    volumes:
+      - ${PORTFOLIO_ARTIFACT_DIR:-./.portfolio-artifact}:/output
+    command: ["sh", "-c", "cp -a /workspace/dist/. /output/"]
+
+  nginx-vps-config-test:
+    image: nginxinc/nginx-unprivileged:1.29-alpine
+    profiles: ["config-test"]
+    volumes:
+      - ./nginx/vps.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./nginx/security-headers.inc:/etc/nginx/security-headers.inc:ro
+    command: ["nginx", "-t"]
+
+  e2e-production:
+    build:
+      context: .
+      dockerfile: Dockerfile.e2e
+    profiles: ["production-test"]
+    depends_on:
+      portfolio:
+        condition: service_healthy
+    environment:
+      BASE_URL: http://portfolio:8080
+    command: ["npm", "run", "e2e:smoke"]

@@ -1,0 +1,8 @@
+http://portfolio.ihorhub.eu {
+	redir https://portfolio.ihorhub.eu{uri} permanent
+}
+
+portfolio.ihorhub.eu {
+	encode zstd gzip
+	reverse_proxy portfolio-web:8080
+}

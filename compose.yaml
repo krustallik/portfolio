@@ -34,6 +34,15 @@ services:
       - .:/workspace
       - node_modules:/workspace/node_modules
 
+  e2e-public:
+    build:
+      context: .
+      dockerfile: Dockerfile.e2e
+    profiles: ["public-smoke"]
+    environment:
+      BASE_URL: ${BASE_URL:-https://portfolio.ihorhub.eu}
+    command: ["npm", "run", "e2e:smoke"]
+
   dependency-setup:
     image: node:24.21.0-alpine
     profiles: ["setup"]

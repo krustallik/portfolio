@@ -1,0 +1,203 @@
+name: Portfolio deployment
+
+on:
+  workflow_run:
+    workflows: [Portfolio CI]
+    types: [completed]
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      ci_run_id:
+        description: Successful Portfolio CI run ID containing the exact static artifact
+        required: true
+        type: string
+      commit_sha:
+        description: Full commit SHA from that successful run
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: portfolio-production-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: >-
+      ${{ vars.PORTFOLIO_DEPLOY_ENABLED == 'true' &&
+          ((github.event_name == 'workflow_run' &&
+            github.event.workflow_run.conclusion == 'success' &&
+            github.event.workflow_run.event == 'push' &&
+            github.event.workflow_run.head_branch == 'main') ||
+           (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main')) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      actions: read
+      contents: read
+    env:
+      PORTFOLIO_DEPLOY_HOST: ${{ vars.PORTFOLIO_DEPLOY_HOST }}
+      PORTFOLIO_DEPLOY_USER: ${{ vars.PORTFOLIO_DEPLOY_USER }}
+      PORTFOLIO_DEPLOY_PATH: ${{ vars.PORTFOLIO_DEPLOY_PATH }}
+      PORTFOLIO_DEPLOY_KNOWN_HOSTS: ${{ vars.PORTFOLIO_DEPLOY_KNOWN_HOSTS }}
+      PORTFOLIO_SITE_URL: ${{ vars.PORTFOLIO_SITE_URL }}
+      SOURCE_RUN_ID: ${{ github.event.workflow_run.id || inputs.ci_run_id }}
+      SOURCE_SHA: ${{ github.event.workflow_run.head_sha || inputs.commit_sha }}
+    steps:
+      - name: Checkout the exact CI commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: ${{ github.event.workflow_run.head_sha || inputs.commit_sha }}
+          persist-credentials: false
+
+      - name: Verify successful CI run, default branch tip, and matching artifact
+        id: source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -Eeuo pipefail
+          [[ "$SOURCE_RUN_ID" =~ ^[1-9][0-9]*$ && "$SOURCE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$PORTFOLIO_DEPLOY_HOST" == "169.58.239.149" ]]
+          [[ "$PORTFOLIO_DEPLOY_USER" == "portfolio-deploy" ]]
+          [[ "$PORTFOLIO_DEPLOY_PATH" == "/srv/portfolio" ]]
+          [[ "$PORTFOLIO_SITE_URL" == "https://portfolio.ihorhub.eu" ]]
+
+          gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN_ID" > "$RUNNER_TEMP/portfolio-ci-run.json"
+          jq -e \
+            --arg repo "$GITHUB_REPOSITORY" \
+            --arg sha "$SOURCE_SHA" \
+            '.repository.full_name == $repo
+              and .head_sha == $sha
+              and .head_branch == "main"
+              and .event == "push"
+              and .conclusion == "success"
+              and (.path | split("@")[0]) == ".github/workflows/ci.yml"' \
+            "$RUNNER_TEMP/portfolio-ci-run.json" >/dev/null
+
+          current_main="$(gh api "repos/$GITHUB_REPOSITORY/branches/main" --jq '.commit.sha')"
+          [[ "$current_main" == "$SOURCE_SHA" ]] || {
+            echo "::error::A newer main commit exists; refusing to deploy an older artifact."
+            exit 1
+          }
+
+          run_attempt="$(jq -r '.run_attempt' "$RUNNER_TEMP/portfolio-ci-run.json")"
+          artifact_name="portfolio-dist-$SOURCE_SHA-$run_attempt"
+          artifact_count="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$SOURCE_RUN_ID/artifacts" \
+            --jq --arg name "$artifact_name" '[.artifacts[] | select(.name == $name and .expired == false)] | length')"
+          [[ "$artifact_count" == "1" ]] || {
+            echo "::error::The exact-SHA CI artifact is missing, expired, or ambiguous."
+            exit 1
+          }
+
+          printf 'sha=%s\nrun_id=%s\nrun_attempt=%s\n' \
+            "$SOURCE_SHA" "$SOURCE_RUN_ID" "$run_attempt" >> "$GITHUB_OUTPUT"
+
+      - name: Download the artifact from that exact CI run
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: portfolio-dist-${{ steps.source.outputs.sha }}-${{ steps.source.outputs.run_attempt }}
+          path: ${{ runner.temp }}/portfolio-artifact
+          run-id: ${{ steps.source.outputs.run_id }}
+          github-token: ${{ github.token }}
+
+      - name: Verify artifact provenance and static files
+        run: |
+          set -Eeuo pipefail
+          jq -e \
+            --arg sha "${{ steps.source.outputs.sha }}" \
+            --arg run_id "${{ steps.source.outputs.run_id }}" \
+            --arg run_attempt "${{ steps.source.outputs.run_attempt }}" \
+            --arg site_url "$PORTFOLIO_SITE_URL" \
+            '.sha == $sha and .run_id == $run_id and .run_attempt == $run_attempt and .site_url == $site_url' \
+            "$RUNNER_TEMP/portfolio-artifact/manifest.json" >/dev/null
+          [[ -f "$RUNNER_TEMP/portfolio-artifact/site/index.html" ]]
+          [[ -f "$RUNNER_TEMP/portfolio-artifact/site/sitemap.xml" ]]
+          [[ -f "$RUNNER_TEMP/portfolio-artifact/site/robots.txt" ]]
+          if find "$RUNNER_TEMP/portfolio-artifact/site" -type l -print -quit | grep -q .; then
+            echo "::error::Static artifacts must not contain symlinks."
+            exit 1
+          fi
+
+      - name: Prepare pinned SSH credentials
+        env:
+          PORTFOLIO_DEPLOY_SSH_KEY: ${{ secrets.PORTFOLIO_DEPLOY_SSH_KEY }}
+        run: |
+          set -Eeuo pipefail
+          [[ -n "$PORTFOLIO_DEPLOY_SSH_KEY" && -n "$PORTFOLIO_DEPLOY_KNOWN_HOSTS" ]]
+          umask 077
+          mkdir -p "$RUNNER_TEMP/portfolio-ssh"
+          printf '%s\n' "$PORTFOLIO_DEPLOY_SSH_KEY" > "$RUNNER_TEMP/portfolio-ssh/id_ed25519"
+          printf '%s\n' "$PORTFOLIO_DEPLOY_KNOWN_HOSTS" > "$RUNNER_TEMP/portfolio-ssh/known_hosts"
+          unset PORTFOLIO_DEPLOY_SSH_KEY
+          chmod 600 "$RUNNER_TEMP/portfolio-ssh/id_ed25519" "$RUNNER_TEMP/portfolio-ssh/known_hosts"
+          ssh-keygen -y -f "$RUNNER_TEMP/portfolio-ssh/id_ed25519" >/dev/null
+          ssh-keygen -l -f "$RUNNER_TEMP/portfolio-ssh/known_hosts" >/dev/null
+          ssh -i "$RUNNER_TEMP/portfolio-ssh/id_ed25519" \
+            -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            -o UserKnownHostsFile="$RUNNER_TEMP/portfolio-ssh/known_hosts" \
+            -o ConnectTimeout=10 \
+            "$PORTFOLIO_DEPLOY_USER@$PORTFOLIO_DEPLOY_HOST" true
+
+      - name: Stage and atomically activate the release
+        id: activate
+        env:
+          RELEASE_SHA: ${{ steps.source.outputs.sha }}
+          CI_RUN_ID: ${{ steps.source.outputs.run_id }}
+          CI_RUN_ATTEMPT: ${{ steps.source.outputs.run_attempt }}
+        run: |
+          set -Eeuo pipefail
+          release_id="$RELEASE_SHA-$CI_RUN_ID-$CI_RUN_ATTEMPT"
+          target="$PORTFOLIO_DEPLOY_USER@$PORTFOLIO_DEPLOY_HOST"
+          ssh_opts=(
+            -i "$RUNNER_TEMP/portfolio-ssh/id_ed25519"
+            -o BatchMode=yes
+            -o IdentitiesOnly=yes
+            -o StrictHostKeyChecking=yes
+            -o UserKnownHostsFile="$RUNNER_TEMP/portfolio-ssh/known_hosts"
+            -o ConnectTimeout=10
+          )
+
+          ssh "${ssh_opts[@]}" "$target" \
+            "mkdir -p '$PORTFOLIO_DEPLOY_PATH/incoming/$release_id' '$PORTFOLIO_DEPLOY_PATH/bin'"
+          rsync -az --delete --safe-links --chmod=D755,F644 \
+            -e "ssh -i $RUNNER_TEMP/portfolio-ssh/id_ed25519 -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$RUNNER_TEMP/portfolio-ssh/known_hosts" \
+            "$RUNNER_TEMP/portfolio-artifact/site/" \
+            "$target:$PORTFOLIO_DEPLOY_PATH/incoming/$release_id/"
+          rsync -az --chmod=D755,F755 \
+            -e "ssh -i $RUNNER_TEMP/portfolio-ssh/id_ed25519 -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=$RUNNER_TEMP/portfolio-ssh/known_hosts" \
+            scripts/deploy/activate.sh scripts/deploy/rollback.sh \
+            "$target:$PORTFOLIO_DEPLOY_PATH/bin/"
+          ssh "${ssh_opts[@]}" "$target" \
+            "bash '$PORTFOLIO_DEPLOY_PATH/bin/activate.sh' '$RELEASE_SHA' '$CI_RUN_ID' '$CI_RUN_ATTEMPT' '$PORTFOLIO_SITE_URL'"
+
+      - name: Verify public HTTPS, routes, and built assets
+        env:
+          SITE_URL: ${{ vars.PORTFOLIO_SITE_URL }}
+        run: bash scripts/deploy/public-smoke.sh "$SITE_URL"
+
+      - name: Verify public site in Playwright container
+        env:
+          BASE_URL: ${{ vars.PORTFOLIO_SITE_URL }}
+        run: docker compose -p portfolio-public-smoke --profile public-smoke run --build --rm e2e-public
+
+      - name: Roll back this portfolio release if post-deploy smoke failed
+        if: failure() && steps.activate.outcome == 'success'
+        env:
+          PORTFOLIO_DEPLOY_SSH_KEY: ${{ secrets.PORTFOLIO_DEPLOY_SSH_KEY }}
+        run: |
+          set -Eeuo pipefail
+          umask 077
+          printf '%s\n' "$PORTFOLIO_DEPLOY_SSH_KEY" > "$RUNNER_TEMP/portfolio-ssh/id_ed25519"
+          unset PORTFOLIO_DEPLOY_SSH_KEY
+          ssh -i "$RUNNER_TEMP/portfolio-ssh/id_ed25519" \
+            -o BatchMode=yes -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes \
+            -o UserKnownHostsFile="$RUNNER_TEMP/portfolio-ssh/known_hosts" \
+            -o ConnectTimeout=10 \
+            "$PORTFOLIO_DEPLOY_USER@$PORTFOLIO_DEPLOY_HOST" \
+            "bash '$PORTFOLIO_DEPLOY_PATH/bin/rollback.sh' '$PORTFOLIO_SITE_URL'"
+
+      - name: Remove temporary credentials
+        if: always()
+        run: rm -rf -- "$RUNNER_TEMP/portfolio-ssh"

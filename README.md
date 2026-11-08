@@ -1,6 +1,6 @@
 # Bc. Ihor Havryliv — portfolio
 
-A responsive, recruiter-focused portfolio for a Computer Science graduate and engineering student in Košice, Slovakia. It presents six documented GitHub projects as concise case studies, links to five additional repositories, and keeps availability, education, skills, and contact information close to the work.
+A responsive, recruiter-focused portfolio for a Computer Science graduate and engineering student in Košice, Slovakia. It presents six documented GitHub projects as concise case studies, links to eight additional repositories, and keeps availability, education, skills, and contact information close to the work.
 
 ## Stack
 
@@ -54,7 +54,7 @@ docker compose -p profile-production -f compose.production.yaml build --pull
 docker compose -p profile-production -f compose.production.yaml up -d
 ```
 
-The container serves Nginx on `127.0.0.1:4173` by default. Change `PORT` in `.env` if needed. The listener stays on loopback for an existing reverse proxy. See [self-hosting notes](docs/deployment/SELF_HOSTING.md).
+The container serves Nginx on `127.0.0.1:4173` by default. Change `PORT` in `.env` if needed. The listener stays on loopback for an existing reverse proxy. See [self-hosting notes](docs/deployment/SELF_HOSTING.md) and the [VPS CI/CD deployment guide](docs/deployment/VPS_DEPLOYMENT.md).
 
 ## Features
 
@@ -67,7 +67,7 @@ The container serves Nginx on `127.0.0.1:4173` by default. Change `PORT` in `.en
 - Pre-rendered home and project routes with per-page metadata; sitemap output is enabled once a real domain is configured
 - Contact through the user-provided email and verified GitHub profile; no contact form or unverified LinkedIn/CV
 - Education shows a Computer Science bachelor's degree completed in 2025 and second, final-year engineering studies (Ing.) at TUKE, alongside the two-year Software Development program completed at IT STEP Academy in 2026
-- Five additional repository links and a clear note on the unreproduced historical CFD/PINN thesis results
+- Eight additional repository links with repository-based descriptions
 
 ## Project content
 
