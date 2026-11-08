@@ -34,7 +34,7 @@ jobs:
           }
 
       - name: Start Dockerized development server
-        run: docker compose -p portfolio-ci-dev up -d --build portfolio
+        run: docker compose -p portfolio-ci-dev up -d --build --wait --wait-timeout 300 portfolio
 
       - name: Lint, typecheck, and unit tests in Docker
         run: |
